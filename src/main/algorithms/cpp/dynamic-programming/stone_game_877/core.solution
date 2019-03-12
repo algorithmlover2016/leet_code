@@ -1,0 +1,19 @@
+best_solution_url : https://leetcode.com/problems/stone-game/discuss/154610/C%2B%2BJavaPython-DP-or-Just-return-true
+dpSolution:
+    no matter who do the current choice, the dp[i][j] always means the max piles he can get.
+    So, the player can do the choice, which is selecting piles[i] or piles[j].
+    If he chooses i, then the max piles he can get when the range is [i, j] is piles[i] - dp[i + 1][j]
+    If he chooses j, then the max piles he can get when the range is [i, j] is piles[j] - dp[i][j - 1]
+
+dp[i][j] means the biggest number of stones you can get more than opponent picking piles in piles[i] ~ piles[j].
+You can first pick piles[i] or piles[j].
+If you pick piles[i], your result will be piles[i] - dp[i + 1][j]
+If you pick piles[j], your result will be piles[j] - dp[i][j - 1]
+So we get:
+    dp[i][j] = max(piles[i] - dp[i + 1][j], piles[j] - dp[i][j - 1])
+We start from smaller subarray and then we use that to calculate bigger subarray.
+Note that take evens or take odds, it's just an easy strategy to win when the number of stones is even.
+
+when converting two-dimensional arrays to one-dimensional arrays,
+     the dp[index] on the left of equal sign represents dp[index][index + curDiff]
+     the dp[index] on the right of equal sign represents dp[index][index + preDiff], where preDiff = curDiff - 1;
