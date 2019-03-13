@@ -1,0 +1,17 @@
+if a <= 0 and b <= 0:
+    return 0.5 # means a and b are empty at the same time
+elif a <= 0: # which means b > 0
+    return 1 # a becomes empty first
+elif b <= 0: # which means a > 0;
+    return 0 # b becames empty first
+elif :
+# for quickly find answer, we need a map or array to store the pre-computed answer
+when array, use the index; when map, we can make the uniqe key
+if exists (the value has been evaluted, just return)
+if not: compute it and save it in map or array
+
+Noting:
+    why (N + 24) / 25:
+        to make loop looking more simple and use array's index
+        make the range become smaller, eg: 75 ~ 100 just save a key
+
