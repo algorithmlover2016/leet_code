@@ -33,5 +33,6 @@
 
 # tmp or bak file
 *.bak*
-*.tmp*
+*.?tmp*
 *.back*
+res
