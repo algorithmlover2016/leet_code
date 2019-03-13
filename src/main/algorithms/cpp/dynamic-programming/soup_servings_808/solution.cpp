@@ -1,4 +1,7 @@
 #include <iostream>
+#include <sstream>
+#include <string>
+
 class Solution {
 public:
     double soupServings(int N) {
