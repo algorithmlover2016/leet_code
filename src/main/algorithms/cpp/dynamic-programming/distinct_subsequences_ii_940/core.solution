@@ -1,0 +1,5 @@
+first: there are 26 letters in total.
+second: the last letter in each subsequence will be equal to s[index] or not
+    // sum is the all element, +1 means the longest string ending with S[index] can add the character
+    // addedNum = sum - endWithCharSum[S[index] - 'a'] + 1;
+    // sum = (sum + addedNum) % modNum;
