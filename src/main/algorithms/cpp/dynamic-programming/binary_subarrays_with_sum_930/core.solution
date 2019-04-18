@@ -1,0 +1,2 @@
+when psum >= S, if you add a element which is not zero, then you need remove one element which is equal to the new element from the begin
+because you start from psum < S, so you can do this.
