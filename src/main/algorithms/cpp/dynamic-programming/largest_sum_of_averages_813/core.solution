@@ -1,0 +1,14 @@
+the solution is described as follows:
+first: we can loop the array to get the average number
+       when the value of index range from 1 to i, (1 <= i <= N) and divided group is 1;
+second: the optimal substructure is when we add a element from the end of the array,
+        the solution is,
+        1. the last ele is a independent group, and the previous elements are be divided to K - 1 group.
+           and then the result is the average of pre-eles + last-ele
+        2. the last two eles are a group, and the others are to be K - 1 group.
+           and then the result is the average of the others + last-two-ele / 2
+        3. the last three eles are a group ...
+        when we have computed the average value, we can return it directly.
+        when the length of needing dividing groups is less than the target of dividing groups, return 0, which means it can not be complete;
+
+        I can't describe it any more. I'm weak in English.
