@@ -1,0 +1,3 @@
+we cat fetch the target from the upper, or from the lower
+when from the upper, we need turn back
+when from the lower, we need first add to (n -1), and then turn back, and then we close a value which is least step to arrive new target
