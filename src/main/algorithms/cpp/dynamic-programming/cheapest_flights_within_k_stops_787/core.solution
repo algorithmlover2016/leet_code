@@ -1,0 +1,4 @@
+the solution is described as follows:
+dijkstra: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+first: create the relation map
+second: bread search first

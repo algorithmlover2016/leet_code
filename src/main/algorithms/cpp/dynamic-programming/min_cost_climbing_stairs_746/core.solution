@@ -1,0 +1,3 @@
+dp solution:
+if we take the index step, which can come from index - 2 or index - 1
+the final answer will be size() - 2 -> size() or size() - 1

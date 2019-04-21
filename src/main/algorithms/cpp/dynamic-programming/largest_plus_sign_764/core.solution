@@ -1,0 +1,3 @@
+the solution is described as follows:
+we need loop element, and compute four direction for each element. If we do normally, the time complexity will be O(N^4)
+so, when we compute result for a element, we can simultaneously compute all the direction.
