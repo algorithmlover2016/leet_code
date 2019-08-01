@@ -1,0 +1,6 @@
+*.idea
+*.DS*
+*.swp
+*.bak
+*.tmp
+*.pyc
