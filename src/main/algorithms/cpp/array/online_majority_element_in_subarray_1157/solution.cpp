@@ -1,4 +1,5 @@
 #include "../../head.h"
+#define SORTED
 class MajorityChecker {
 public:
     MajorityChecker(std::vector<int> const & arr) {
@@ -16,10 +17,16 @@ public:
 
 #ifdef SORTED
         for (auto & tmpEleIdx : tmpEleIdxs) {
-            eleIdxs.emplace_back({tmpEleIdx.first, tmpEleIdx.second});
+            eleIdxs.emplace_back(std::make_pair(tmpEleIdx.first, tmpEleIdx.second));
+            // eleIdxs.push_back({tmpEleIdx.first, tmpEleIdx.second});
+            // can not be
+            // eleIdxs.emplace_back({tmpEleIdx.first, tmpEleIdx.second});
         }
         std::sort(std::begin(eleIdxs), std::end(eleIdxs), 
-                [ ](auto & eleIdx1, auto & eleIdx2) {return eleIdx1.second.size() > eleIdx2.second.size()})
+                [](std::pair<int, std::vector<int> >  & eleIdx1, std::pair<int, std::vector<int> > & eleIdx2) {
+                    return eleIdx1.second.size() > eleIdx2.second.size();
+                }
+                );
 #endif
     }
     
@@ -46,7 +53,7 @@ public:
 #ifndef SORTED
     std::unordered_map<int, std::vector<int> > eleIdxs;
 #else
-    std::vector<std::pair<int, std::vector<int> > eleIdxs;
+    std::vector<std::pair<int, std::vector<int> > > eleIdxs;
 #endif
 
 };

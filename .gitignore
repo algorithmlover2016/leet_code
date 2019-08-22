@@ -36,4 +36,4 @@
 *.tmp
 *.back
 res
-main
+bin_output
