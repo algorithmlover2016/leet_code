@@ -36,4 +36,5 @@
 *.tmp
 *.back
 res
+res.txt
 bin_output
