@@ -32,8 +32,8 @@
 *.app
 
 # tmp or bak file
-*.bak*
-*.?tmp*
-*.back*
+*.bak
+*.tmp
+*.back
 res
 main

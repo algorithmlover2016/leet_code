@@ -1,0 +1,9 @@
+first:
+    construct an map, whose key is the element of the array,
+    and the value is the list of the element's location (start from zero) where the element is placed.
+second: 
+    violent traversal the map to find the result
+    sorted the map to make the most likely result being first discovered
+    random search
+        first the result must meet the request that the number of its index is larger or equal than threshold
+        second the distance of the most left and  the most right index is larger or equal threshold
