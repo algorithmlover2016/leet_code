@@ -1,0 +1,8 @@
+one solution:
+    use stack to save the element.
+    the stack.back() is alway root;
+    plagiarz lee215 from https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/discuss/274621/JavaC%2B%2BPython-Iterative-Stack-Solution
+another solution:
+    preOrderTraversal the tree;
+    but not record the pre-node.
+    plagiarz someone from solutions
