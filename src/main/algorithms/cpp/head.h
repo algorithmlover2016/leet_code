@@ -23,4 +23,5 @@
 #include <limits>
 #include <random>
 #include <utility>
+#include <cctype>
 #endif

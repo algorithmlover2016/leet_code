@@ -1,4 +1,4 @@
-#include "../../header.h"
+#include "../../head.h"
 #inlcude "../tree.h"
 
 class Solution {
