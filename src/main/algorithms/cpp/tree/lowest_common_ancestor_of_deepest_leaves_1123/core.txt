@@ -1,0 +1,6 @@
+the core idea is that: 
+    if the heights of the subtrees of the node are equal, then the node is the common ancestor
+    so if the heights is the max number, then the node is the first to meet this requirement and it's the lowest ancestor
+copy solution from:
+https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves/discuss/334577/JavaC%2B%2BPython-Two-Recursive-Solution
+I plagiarize lee215

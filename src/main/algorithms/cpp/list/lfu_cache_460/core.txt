@@ -1,0 +1,5 @@
+first:
+    one map record key -> value, address
+    one map record key -> count 
+    one map record count -> address (first recent used)
+

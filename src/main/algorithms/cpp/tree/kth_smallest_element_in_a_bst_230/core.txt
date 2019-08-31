@@ -1,0 +1,2 @@
+inorder traversal will first get its left, and then itself, and then its right
+so, you first get smallest, and then bigger

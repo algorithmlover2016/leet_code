@@ -1,0 +1,5 @@
+plagiarize lee215 and his comment("Zzz_"), url is:
+https://leetcode.com/problems/delete-nodes-and-return-forest/discuss/328853/JavaPython-Recursion-Solution
+first:
+    I should remind in my mind, recursion will keep the featur that when return from the sub_call, the node can be modify.
+first postorder traversal tree, and then record the node

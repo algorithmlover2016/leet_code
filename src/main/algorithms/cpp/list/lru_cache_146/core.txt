@@ -1,0 +1,6 @@
+if we want to do get put operation in O(1) time complexity, we should use map
+insert in O(1) time complexity, should use linked_list
+first, we use map to storage key and linked node and the linked node record the value
+    map get its value by key is O(1) time complexity, and the linked node recording the value
+second, we should modify the storage, so we need insert or delete elements.
+    If we want do it in O(1) time complexity, we should use list
