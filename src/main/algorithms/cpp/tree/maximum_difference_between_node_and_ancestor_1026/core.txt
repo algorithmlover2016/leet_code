@@ -1,0 +1,2 @@
+first: find the min and the max element in its left and right subTree;
+second: max(abs(node->val - min), abs(node->val - max))
