@@ -1,0 +1,3 @@
+preorder: root -> left -> right
+inorder:  left -> root -> right
+so dependens on preorder and traversal inorder

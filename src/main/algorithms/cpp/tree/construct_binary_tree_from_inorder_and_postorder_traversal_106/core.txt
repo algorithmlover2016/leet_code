@@ -1,0 +1,4 @@
+inorder: left -> root -> right
+postorder: left -> right -> root
+so you first find root, and partition the array, just like 105
+backforward the postorder and the inorder
