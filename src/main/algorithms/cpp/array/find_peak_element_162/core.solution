@@ -1,0 +1,5 @@
+first:
+    make the number to be a pair (in this question, 1 <= d[i][j] <= 9, the type of pair can be int,
+            to be general, can be string with a special character, such as "@")
+second: 
+    count the permutation of the same subArrays
