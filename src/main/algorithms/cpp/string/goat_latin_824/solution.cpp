@@ -1,5 +1,46 @@
 #include "../../head.h"
 
+class SolutionLamda {
+public:
+    std::string toGoatLatin(std::string const & S) {
+        function<bool(char)> isVowel = [](char i) -> bool {
+            switch(tolower(i)) {
+                case 'a':
+                case 'e':
+                case 'i':
+                case 'o':
+                case 'u':
+                    return true;
+            }
+            return false;
+        };
+        std::string ans = "", cur = "", suff = "ma";
+        for(int i = 0; i <= S.size(); ++i) {
+            if (i == S.size() || S[i] == ' ') {
+                if (cur.size() == 0) {
+                    continue;
+                }
+                suff += "a";
+                if (isVowel(cur[0])) {
+                    cur += suff;
+                } else {
+                    cur += (cur[0] + suff);
+                    cur.erase(cur.begin());
+                }
+                // the first word, there is no need to add " " at begining
+                if (suff.size() > 3) {
+                    ans+=" ";
+                }
+                ans += cur;
+                cur = "";
+            } else {
+                cur+=S[i];
+            }
+        }
+        return ans;
+    }
+};
+
 class Solution {
 public:
     std::string toGoatLatinLowUper(std::string const & S) {
