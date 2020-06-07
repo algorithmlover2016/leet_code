@@ -26,25 +26,48 @@ public:
             if (isupper(s[r])) {
                 needUpper = 0;
             }
-            if (s[l] != s[r]) {
-                l = r;
-            }
+
+            // if (s[l] != s[r]) {
+            //     l = r;
+            // }
+            // // the const int is meaningless
+            // if (((len = r -l) == MAXREPLEN - 1) && (s[l] == s[l + 1]) && (s[l + 1] == s[r])) {
+            //     // if need add eleements, add first
+            //     if (toAdd < addTarget) {
+            //         //        aaa -> aaBa
+            //         // index: l r ->    l(r)
+            //         toAdd++;
+            //         l = r;
+            //     // if no need adding(sSize >= 6), then replace elements
+            //     } else {
+            //         //        aaa -> aaB
+            //         // index: l r ->   rl
+            //         toReplace++;
+            //         l = r + 1;
+            //     }
+            // }
+
             // the const int is meaningless
-            if (((len = r -l) == MAXREPLEN - 1) && (s[l] == s[l + 1]) && (s[l + 1] == s[r])) {
-                // if need add eleements, add first
-                if (toAdd < addTarget) {
-                    //        aaa -> aaBa
-                    // index: l r ->    l(r)
-                    toAdd++;
-                    l = r;
-                // if no need adding(sSize >= 6), then replace elements
+            if (((len = r -l) == MAXREPLEN - 1)) {
+                if ((s[l] == s[l + 1]) && (s[l + 1] == s[r])) {
+                    // if need add eleements, add first
+                    if (toAdd < addTarget) {
+                        //        aaa -> aaBa
+                        // index: l r ->    l(r)
+                        toAdd++;
+                        l = r;
+                        // if no need adding(sSize >= 6), then replace elements
+                    } else {
+                        //        aaa -> aaB
+                        // index: l r ->   rl
+                        toReplace++;
+                        l = r + 1;
+                    }
                 } else {
-                    //        aaa -> aaB
-                    // index: l r ->   rl
-                    toReplace++;
-                    l = r + 1;
+                    l++;
                 }
             }
+
 
         }
         // if sSize <= MAXSTRLEN, there will no need delete
