@@ -59,6 +59,7 @@ public:
                     l.cnt += uniquept[i].cnt;
                     find = true;
                     // how to avoid two line make a cross?
+                    // std::swap(points[i], points[rand() % (i+1)]); the random swap? how?
                     // for example: [[1,5],[2,4],[5,5],[4,4],[3,3], [2, 2], [1,1],[4,2]]
                     break;
                 }
