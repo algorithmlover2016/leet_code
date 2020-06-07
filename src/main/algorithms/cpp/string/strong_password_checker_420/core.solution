@@ -1,0 +1,6 @@
+when s.size() < 6, we must add;
+when s.size() <= 20, we first add elements if need, and then replace. add and replace have a litte difference
+
+when s.size() > 20, we must delete elements.
+repetitions's length % 3 = 0(once delete = once replace), 1(twice delete = once replace), 2(three delete = once replace)
+we first execute delete, and then if necessary, we do replace.
