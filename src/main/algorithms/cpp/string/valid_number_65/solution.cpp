@@ -1,5 +1,55 @@
 #include "../../head.h"
 
+class SolutionCheckNumber {
+public:
+    bool isNumber(string s) {
+        int begin = 0;
+        int end = s.size();
+        while (begin < end && s[begin] == ' ') begin++;
+        while (begin < end && s[end - 1] == ' ') end--;
+        return isTrimmedNumber(s.substr(begin, end - begin));
+    }
+    
+    bool isTrimmedNumber(string s) {
+        if (s.empty()) return false;
+        int e = s.find('e');
+        if (e == string::npos) {
+            return isDecimalNum(s);   
+        } else {
+            return isDecimalNum(s.substr(0, e)) &&
+                isIntegerNum(s.substr(e + 1), true, false);
+        }
+    }
+    
+    bool isDecimalNum(string s) {
+        if (s.empty()) return false;
+        int sep = s.find('.');
+        if (sep == string::npos) {
+            return isIntegerNum(s, true, false);
+        } else {
+            string l = s.substr(0, sep);
+            string r = s.substr(sep + 1);
+                        
+            return (isIntegerNum(l, true, true) && // [+]1.[0]
+                    isIntegerNum(r, false, false))
+                || (isIntegerNum(l, true, false) && // [0].1
+                    isIntegerNum(r, false, true));
+                
+        }
+    }
+    
+    bool isIntegerNum(string s, bool is_signed, bool can_be_empty) {
+        if (is_signed && !s.empty() && (s[0] == '-' || s[0] == '+')) {
+            s = s.substr(1);
+//            can_be_empty = false;
+        }
+        
+        if (s.empty()) return can_be_empty;
+        for (char c : s) if (!isdigit(c)) return false;
+        return true;
+    }
+};
+
 class Solution {
 public:
     bool isNumber(std::string const & s) {
