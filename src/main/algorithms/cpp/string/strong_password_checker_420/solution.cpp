@@ -1,5 +1,55 @@
 #include "../../head.h"
 
+class SolutionNoMapStore {
+public:
+    int strongPasswordChecker(std::string const & s) {
+        const int n = s.length();
+        int insert = 0;
+        int replace = 0;
+        int has_digit = 0;
+        int has_upper = 0;
+        int has_lower = 0;
+        int ones = 0;
+        int twos = 0;
+        int repeat = 1;
+        for (const auto & ch : s) {
+            has_digit = has_digit || isdigit(ch);
+            has_upper = has_upper || isupper(ch);
+            has_lower = has_lower || islower(ch);
+        }
+        for (int i = 1; i <= n; ++i) {
+            if (i == n || s[i] != s[i - 1]) {
+                if (repeat >= 3) {
+                    replace += repeat / 3;
+                    if (repeat % 3 == 0) {
+                        ++ones;
+                    } else if (repeat % 3 == 1) {
+                        ++twos;
+                    }
+                }
+                repeat = 1;
+            } else {
+                ++repeat;
+            }
+        }
+        int must_change = 3 - has_digit - has_upper - has_lower;
+        if (n < 6) {
+            return max(6 - n, must_change);
+        }        
+        if (n <= 20) {
+            return max(replace, must_change);
+        }
+        int total_remove = n - 20;
+        int remove = total_remove;
+        replace -= min(ones, remove);
+        remove = max(0, remove - ones);
+        replace -= min(twos, remove / 2);
+        remove = max(0, remove - twos * 2);
+        replace = max(0, replace - remove / 3);
+        return total_remove + max(replace, must_change);
+    }
+};
+
 class Solution {
 private:
     int const MAXREPLEN = 0x03;
