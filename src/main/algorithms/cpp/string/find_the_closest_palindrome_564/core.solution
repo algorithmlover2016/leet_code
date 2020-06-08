@@ -1,0 +1,6 @@
+there are only three number
+upper: change the middle bit to make big, from the middle + 1 to right set to 0
+middle: don't change [0 - (n.size() - 1)/2], from the left to middle no change
+lower: change the middle bit to make smaller, from the middle + 1 to the right set to 9
+the numbers' order
+lower <= middle <= upper
