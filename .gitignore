@@ -35,6 +35,8 @@
 *.bak
 *.tmp
 *.back
+.*.swp
+*.swp
 res
 res.txt
 bin_output
