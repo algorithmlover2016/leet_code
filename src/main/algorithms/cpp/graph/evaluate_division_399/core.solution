@@ -1,0 +1,2 @@
+dfs & bfs
+bfs: from top to buttom, each node in each layer record its weight
