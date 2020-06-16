@@ -37,6 +37,7 @@
 *.back
 .*.swp
 *.swp
+.DS_Store
 res
 res.txt
 bin_output
