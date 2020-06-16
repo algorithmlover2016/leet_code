@@ -24,4 +24,5 @@
 #include <random>
 #include <utility>
 #include <cctype>
+#include <locale>
 #endif
