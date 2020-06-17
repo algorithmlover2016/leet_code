@@ -51,6 +51,7 @@ public:
 class Solution {
 public:
     int findBestValue(std::vector<int>& A, int target) {
+        // plagiarizing from https://leetcode.com/problems/sum-of-mutated-array-closest-to-target/discuss/463306/JavaC%2B%2BPython-Just-Sort-O(nlogn)
         std::sort(A.begin(), A.end());
         int n = A.size(), i = 0;
         while (i < n && target > A[i] * (n - i)) {
