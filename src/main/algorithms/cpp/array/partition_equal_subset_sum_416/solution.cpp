@@ -42,8 +42,9 @@ public:
     bool helper(std::vector<int> const & nums, int s, int i) {
         if (i == nums.size()) return false;
         // if(nums[i] == s) return true;
-        if(s == nums[i]) return true;
-        if(s < nums[i]) return false;
+        if (s == nums[i]) return true;
+        // you must use the nums[i]
+        if (s < nums[i]) return false;
         return helper(nums, s - nums[i], i + 1) || helper(nums, s, i + 1);
     }
 
