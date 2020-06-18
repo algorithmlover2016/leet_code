@@ -97,3 +97,74 @@ public:
         return count;
     }
 };
+
+class SolutionLee215 {
+public:
+    int reachableNodes(std::vector<std::vector<int>> const & edges, int M, int N) {
+        // plagiarizing from https://leetcode.com/problems/reachable-nodes-in-subdivided-graph/discuss/156739/C%2B%2BJavaPython-Dijkstra-%2B-Priority-Queue
+        std::unordered_map<int, std::unordered_map<int, int>> e;
+        for (auto v : edges) {
+            e[v[0]][v[1]] = e[v[1]][v[0]] = v[2];
+        }
+        std::priority_queue<std::pair<int, int>> pq;
+        pq.push({M, 0});
+        std::unordered_map<int, int> seen;
+        // 从定点开始，看在规定的步数内可以看到多少个非插入新增节点，已经看过的不再重复 BFS
+        while (pq.size()) {
+            int moves = pq.top().first, i = pq.top().second; pq.pop();
+            if (!seen.count(i)) {
+                seen[i] = moves;
+                for (auto j : e[i]) {
+                    int moves2 = moves - j.second - 1;
+                    if (!seen.count(j.first) && moves2 >= 0)
+                        pq.push({moves2, j.first});
+                }
+            }
+        }
+
+        int res = seen.size();
+        // 在能看到的节点中，在看能否相互看中间的新增节点
+        for (auto v : edges) {
+            int a = seen.find(v[0]) == seen.end() ? 0 : seen[v[0]];
+            int b = seen.find(v[1]) == seen.end() ? 0 : seen[v[1]];
+            res += std::min(a + b, v[2]);
+        }
+        return res;
+    }
+};
+
+class SolutionLee215Equal {
+public:
+    int reachableNodes(std::vector<std::vector<int>> const & edges, int M, int N) {
+        // plagiarizing from https://leetcode.com/problems/reachable-nodes-in-subdivided-graph/discuss/156739/C%2B%2BJavaPython-Dijkstra-%2B-Priority-Queue
+        std::unordered_map<int, std::unordered_map<int, int>> e;
+        for (auto v : edges) {
+            e[v[0]][v[1]] = e[v[1]][v[0]] = v[2];
+        }
+        std::priority_queue<std::pair<int, int>> pq;
+        pq.push({M, 0});
+        std::unordered_map<int, int> seen;
+        int res = 0;
+        while (pq.size()) {
+            int moves = pq.top().first, i = pq.top().second; pq.pop();
+            if (!seen.count(i)) {
+                seen[i] = moves;
+                res++;
+                // std::cout << "iterator: " << i << "\tremindedMoves: " << moves << "\n";
+                for (auto & j : e[i]) {
+                    int moves2 = moves - j.second - 1;
+                    int add = std::min(moves, j.second);
+                    if (!seen.count(j.first) && moves2 >= 0) {
+                        // std::cout << "push moves: " << moves2 << "\tindex: " << j.first << "\n";
+                        pq.push({moves2, j.first});
+                    }
+                    e[i][j.first] -= add;
+                    e[j.first][i] -= add;
+                    res += add;
+                    // std::cout << "res: " << res << "\tadd: " << add << "\n";
+                }
+            }
+        }
+        return res;
+    }
+};
