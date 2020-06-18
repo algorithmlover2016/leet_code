@@ -1,0 +1,3 @@
+the original graph is not connected
+from start node move moves step can be executed any time. which means 0 -> 1 ->3; 0 -> 1 ->2 are all right
+the answer is the number of different nodes, not the step
