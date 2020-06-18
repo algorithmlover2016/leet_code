@@ -1,0 +1,3 @@
+== is higher priority to &, so there must be a pair of ()
+std::array initialization std::array<T, SIZE>({ele1, ele2, ..., eleN});
+std::vector<T> initialization std::vector<T>(){ele1, ele2, ..., eleN}; or {ele1, ele2, ..., eleN} when in emplace function or return statement;
