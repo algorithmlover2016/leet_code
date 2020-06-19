@@ -1,0 +1,3 @@
+dfs
+add element in the cur loop, and pop_back
+add element in the next loop, and pop_back in the next loop
