@@ -1,0 +1,4 @@
+(left, right) -> (maxSubTree, minSubTree); 
+subTree all less than 0;
+oneSubTree less than 0;
+none SubTree less than 0;
