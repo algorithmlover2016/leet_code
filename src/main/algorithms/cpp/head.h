@@ -25,4 +25,5 @@
 #include <utility>
 #include <cctype>
 #include <locale>
+#include <cassert>
 #endif
