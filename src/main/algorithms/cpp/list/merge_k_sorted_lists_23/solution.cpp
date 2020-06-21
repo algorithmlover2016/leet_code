@@ -48,7 +48,7 @@ public:
     }
 };
 
-class SolutionNlgKlgK {
+class SolutionNlgK {
 public:
     ListNode* mergeKLists(std::vector<ListNode*> & lists) {
         return merge_lists(lists, 0, lists.size()-1);
