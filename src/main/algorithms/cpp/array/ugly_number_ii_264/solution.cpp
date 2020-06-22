@@ -12,6 +12,9 @@ public:
         minMulti[0] = 1; //n = 1, return 1
 
         int cnt2 = 0, cnt3 = 0, cnt5 = 0;
+        // cnt2 record that the least index that can multiply 2
+        // cnt3 record that the least index that can multiply 3
+        // cnt5 record that the least index that can multiply 5
         for (int index = 2; index <= n; index++) {
             minMulti[index - 1] = std::min(minMulti[cnt2] * 2, std::min(minMulti[cnt3] * 3, minMulti[cnt5]  *5));
             // std::cout << "cnt2: " << cnt2 << "\tcnt3: " << cnt3 << "\tcnt5: " << cnt5 << "\n";
