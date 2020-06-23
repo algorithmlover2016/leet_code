@@ -1,0 +1,2 @@
+inject water into the array, the water will overflow when left or right is height;
+and then you should remove the smaller one, and find the next border.
