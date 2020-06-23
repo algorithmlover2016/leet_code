@@ -1,0 +1,6 @@
+at first, we add nums.size()(namely, K) elements, then if there is only one column, the range is (max - min);
+when we add a new element, the new element must be larger than the min, so we need to remove the min, but add which element?
+every time, we make sure that the size of min priority_queue is equal to K; so to make sure we get the right answer,
+        we must add the same row in nums, which row we just remove the min element, so we need remember the row index;
+        and we must add the next element. which meas we need remember the col index.
+        To get the min diff, each time we add a element, we need update the max;
