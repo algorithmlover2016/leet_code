@@ -57,3 +57,17 @@ public:
         return res;
     }
 };
+
+class SolutionMap {
+public:
+     int numSubarraysWithSum(std::vector<int> const & A, int S) {
+         std::unordered_map<int, int> c({{0, 1}});
+        int psum = 0, res = 0;
+        for (int i : A) {
+            psum += i;
+            res += c[psum - S]; // if has not the key psum -s, c[psum -s] return 0;
+            c[psum]++;
+        }
+        return res;
+    }
+};
