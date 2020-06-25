@@ -76,6 +76,7 @@ public:
     }
 };
 
+// using sliding window to reduce repeat computation
 class SolutionBetterRunTime {
 public:
     std::vector<int> findSubstring(std::string const & s, std::vector<std::string> const & words) {
@@ -86,19 +87,58 @@ public:
         int len = m * wz;
         size_t ghash = 0;
         for (int i = 0; i < words.size(); i++) {
-            ghash += std::hash<std::string>{}(words[i]);
+            ghash += std::hash<std::string>{}(words[i]); // construct a hash object and call the operator();
         }
+
         std::vector<int> ans;
         for (int i = 0; i < wz; i++) {
             size_t thash = 0, cnt = 0;
             for (int j = i; j + wz <= n; j += wz) {
                 if (++cnt < m) {
-                    thash += std::hash<string_view>{}(string_view(&s[j], wz));
+                    thash += std::hash<std::string_view>{}(std::string_view(&s[j], wz));
                     continue;
                 }
-                if (cnt > m) thash -= std::hash<string_view>{}(string_view(&s[j - len], wz));
-                thash += hash<string_view>{}(string_view(&s[j], wz));
-                if (thash == ghash) ans.push_back(j - len + wz);
+                if (cnt > m) {
+                    thash -= std::hash<std::string_view>{}(std::string_view(&s[j - len], wz));
+                }
+
+                thash += std::hash<std::string_view>{}(std::string_view(&s[j], wz));
+                if (thash == ghash) {
+                    ans.push_back(j - len + wz);
+                }
+            }
+        }
+        return ans;
+    }
+    std::vector<int> findSubstringEasyUnderstand(std::string const & s, std::vector<std::string> const & words) {
+        if (s.size() == 0 || words.size() == 0) {
+            return vector<int>();
+        }
+        int n = s.size(), m = words.size(), wz = words[0].size();
+        int len = m * wz;
+        size_t ghash = 0;
+        for (int i = 0; i < words.size(); i++) {
+            ghash += std::hash<std::string>{}(words[i]); // construct a hash object and call the operator();
+        }
+
+        std::vector<int> ans;
+        for (int i = 0; i < wz; i++) {
+            size_t thash = 0, cnt = 0;
+            for (int j = i; j + wz <= n; j += wz) {
+                // cnt++, we didn't add the new word into thash
+                cnt++;
+                thash += std::hash<std::string_view>{}(std::string_view(&s[j], wz));
+                if (cnt < m) {
+                    continue;
+                }
+                if (cnt > m) {
+                    // remove the left word
+                    thash -= std::hash<std::string_view>{}(std::string_view(&s[j - len], wz));
+                }
+
+                if (thash == ghash) {
+                    ans.push_back(j - len + wz);
+                }
             }
         }
         return ans;
@@ -135,8 +175,7 @@ public:
                     tdict[str]++;
                     if (tdict[str] <= dict[str]) {
                         count++;
-                    } else {
-                        // a more word, advance the window left side possiablly
+                    } else { // a more word, advance the window left side possiablly
                         while (tdict[str] > dict[str]) {
                             string str1 = S.substr(left, wl);
                             tdict[str1]--;
