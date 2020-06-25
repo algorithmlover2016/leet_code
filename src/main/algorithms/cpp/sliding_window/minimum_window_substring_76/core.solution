@@ -1,0 +1,3 @@
+get the sliding window and then make sure the target substring
+
+include T, which means elements must in T and lenght is equal. not need to iterator the map
