@@ -100,3 +100,42 @@ public:
         }
     }
 };
+
+// 使用binary search来猜值
+class Solution {
+public:
+    Solution() {std::ios::sync_with_stdio(false); std::cin.tie(nullptr); std::cout.tie(nullptr);}
+
+    int swimInWater(std::vector<std::vector<int>> const & grid) {
+        int n = grid.size(), lo = grid[0][0], hi = n*n; //grid[i][j] is a permutation of [0, ..., N*N - 1]
+        while (lo < hi) {
+            int mid = lo + (hi-lo) / 2;
+            if (!valid(grid, mid))
+                lo = mid + 1;
+            else
+                hi = mid;
+        }
+        return lo;
+    }
+private:
+    bool valid(std::vector<std::vector<int>> const & grid, int waterHeight) {
+        int n = grid.size();
+        std::vector<std::vector<int>> visited(n, std::vector<int>(n, 0));
+        std::vector<int> dir({-1, 0, 1, 0, -1});
+        return dfs(grid, visited, dir, waterHeight, 0, 0, n);
+    }
+
+    bool dfs(std::vector<std::vector<int>> const & grid, std::vector<std::vector<int>>& visited,
+             std::vector<int> const & dir, int wh, int row, int col, int n) {
+        visited[row][col] = 1;
+        for (int i = 0; i < 4; ++i) {
+            int r = row + dir[i], c = col + dir[i+1];
+            if (0 <= r && r < n && 0 <= c && c < n &&
+                visited[r][c] == 0 && grid[r][c] <= wh) {
+                if (r == n-1 && c == n-1) return true; //到达终点
+                if (dfs(grid, visited, dir, wh, r, c, n)) return true; //递归
+            }
+        }
+        return false;
+    }
+};
