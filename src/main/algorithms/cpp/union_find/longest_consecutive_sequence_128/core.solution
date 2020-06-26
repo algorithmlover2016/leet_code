@@ -1,0 +1,1 @@
+window that consecutive numbers create a window, we need recode the most left and most right. we alse need recode the cur ele to avoid visit again
