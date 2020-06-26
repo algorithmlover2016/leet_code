@@ -1,0 +1,4 @@
+find all primes that less than target;
+write the findroot function
+write the union function and can record the unioned node
+each element is connected by its gcd, which must be primes
