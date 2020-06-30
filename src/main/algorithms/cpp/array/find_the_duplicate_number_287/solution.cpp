@@ -22,6 +22,7 @@ public:
         if (nums.empty()) {
             return -1;
         }
+        // already go forward one step
         int slow = nums[0], fast = nums[slow];
         while (slow != fast) {
             // std::cout << "\nfast, slow: " << fast << "\t" << slow << "\t";
