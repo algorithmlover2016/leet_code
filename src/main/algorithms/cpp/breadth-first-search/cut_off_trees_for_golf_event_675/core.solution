@@ -1,0 +1,6 @@
+first: if (i, j) is a tree, you can walk through it without cutting off it
+second:
+    find the minimum number that greater than 1. // minimum heap
+    from start, walk through to it // bfs shortest path without weight
+    cut off the tree.
+    and then from there, go to the next tree // loop
