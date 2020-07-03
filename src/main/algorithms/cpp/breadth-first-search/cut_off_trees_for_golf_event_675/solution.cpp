@@ -140,4 +140,4 @@ private:
     static int const DIRECTION_SIZE = DIRECTION_ARRAY_SIZE - 1;
     static std::array<int, DIRECTION_ARRAY_SIZE> directions;
 };
-std::array<int, Solution::DIRECTION_ARRAY_SIZE> Solution::directions = {0, 1, 0, -1, 0};
+std::array<int, SolutionTLE::DIRECTION_ARRAY_SIZE> SolutionTLE::directions = {0, 1, 0, -1, 0};
