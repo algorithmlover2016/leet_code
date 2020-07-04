@@ -1,0 +1,3 @@
+return 0: left child need not a camera
+return 1: at least one child need a camera, and postorder, so the node must be a camera
+return -1: the node can be monitored by its child, no need a camera in this node position; so the node return 0;
