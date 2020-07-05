@@ -1,0 +1,5 @@
+morrisTraversal: inorder way
+    first left: first to connect most right of the left child to root, and go straightly forward to most left
+                when return, disconnect the most right of the left child to root, and visit root, and then right
+    and then root:
+    and then right
