@@ -19,12 +19,13 @@
 #include <tuple>
 
 #include <algorithm>
+#include <cassert>
+#include <cctype>
 #include <functional>
 #include <iterator>
 #include <limits>
-#include <random>
-#include <utility>
-#include <cctype>
 #include <locale>
-#include <cassert>
+#include <random>
+#include <regex>
+#include <utility>
 #endif
