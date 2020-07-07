@@ -1,6 +1,6 @@
 #include "union_find_map.h"
 
-int Union::FfindRoot(int const index) {
+int UnionF::findRoot(int const index) {
     if (parentIndex.find(index) == parentIndex.end()) {
         parentIndex[index] = index;
         island++;
