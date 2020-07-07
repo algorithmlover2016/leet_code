@@ -30,7 +30,7 @@ int UnionF::unionAndCnt(int const left, int const right) {
     }
     return count;
 }
+
 int UnionF::getIsland() {
     return island;
 }
-#endif

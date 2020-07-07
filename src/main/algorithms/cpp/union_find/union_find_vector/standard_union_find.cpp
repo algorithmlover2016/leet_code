@@ -32,5 +32,3 @@ int Union::unionAndCnt(int const & left, int const & right) {
     }
     return count;
 }
-
-#endif // UNION_FIND_UNION_FIND_VECTOR_STANDARD_UNION_FIND_H
