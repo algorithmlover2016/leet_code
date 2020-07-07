@@ -1,5 +1,5 @@
-#ifndef UNION_FIND_UNION_FIND_MAP_H
-#define UNION_FIND_UNION_FIND_MAP_H
+#ifndef UNION_FIND_UNION_FIND_MAP_UNION_FIND_MAP_H
+#define UNION_FIND_UNION_FIND_MAP_UNION_FIND_MAP_H
 #include "../../head.h"
 
 class UnionF {
@@ -13,4 +13,4 @@ private:
     std::unordered_map<int, int> rank;
     int island = 0;
 };
-#endif
+#endif // UNION_FIND_UNION_FIND_MAP_UNION_FIND_MAP_H
