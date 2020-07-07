@@ -30,3 +30,12 @@ public:
         dfsHelper(root->right, cur, res);
     }
 };
+
+class Solution {
+public:
+    std::string smallestFromLeaf(TreeNode* r, std::string s = "") {
+        if (r == nullptr) return "|";
+        s = string(1, 'a' + r->val) + s;
+        return r->left == r->right ? s : std::min(smallestFromLeaf(r->left, s), smallestFromLeaf(r->right, s));
+    }
+};
