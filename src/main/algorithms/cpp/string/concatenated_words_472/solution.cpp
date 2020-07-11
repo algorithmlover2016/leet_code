@@ -254,12 +254,10 @@ public:
                 node->_c[idx] = new Node();
             }
             node = node->_c[idx];
-            if (i == c - 1) {
-                node->stop = true;
-            }
         }
+        node->stop = true;
     }
-    bool find( string const & w, Node* node, int j, int cnt ) {
+    bool find(string const & w, Node* node, int j, int cnt) {
         int c = w.size();
         for (int i = j ; i < c ; ++i) {
             int idx = w[i] - 'a';
@@ -273,7 +271,7 @@ public:
                     return cnt + 1 > 1;
                 }
                 // restart the search from the root
-                if (find( w, &_root, i + 1, cnt + 1)) {
+                if (find(w, &_root, i + 1, cnt + 1)) {
                     return true;
                 }
             }
@@ -281,18 +279,22 @@ public:
         return false;
     }
     std::vector<std::string> findAllConcatenatedWordsInADict(std::vector<std::string>& words) {
-        if (words.size() < 2)
+        if (words.size() < 2) {
             return std::vector<std::string>();
+        }
 
         // build trie
-        for (auto const & w : words)
+        for (auto const & w : words) {
             fill(w);
+        }
 
         std::vector<std::string> result;
         // check each word against trie
-        for (auto const & w : words)
-            if (find(w, &_root, 0, 0))
+        for (auto const & w : words) {
+            if (find(w, &_root, 0, 0)) {
                 result.push_back(w);
+            }
+        }
         return result;
     }
 };
