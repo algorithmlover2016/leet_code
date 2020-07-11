@@ -235,66 +235,64 @@ class Solution {
 
 class SolutionMaybeEasyUnderstand {
 public:
-    Solution()
-    {
-        ios_base::sync_with_stdio(false);
-        cin.tie(nullptr);
-        cout.tie(nullptr);
+    Solution() {
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(nullptr);
+        std::cout.tie(nullptr);
     }
-    struct Node
-    {
-        array< Node*, 26 > _c {nullptr};
+    struct Node {
+        std::array<Node*, 26 > _c {nullptr};
         bool stop {false};
     };
     Node _root;
-    void fill( string const& w )
-    {
+    void fill(std::string const & w ) {
         Node* node = &_root;
         int c = w.size();
-        for( int i = 0 ; i < c ; ++i )
-        {
+        for ( int i = 0 ; i < c ; ++i ) {
             int idx = w[i] - 'a';
-            if( not node->_c[ idx ] )
-                node->_c[ idx ] = new Node();
-            node = node->_c[ idx ];
-            if( i == c - 1 )
+            if (not node->_c[idx] ) {
+                node->_c[idx] = new Node();
+            }
+            node = node->_c[idx];
+            if (i == c - 1) {
                 node->stop = true;
+            }
         }
     }
-    bool find( string const& w, Node* node, int j, int cnt )
-    {
+    bool find( string const & w, Node* node, int j, int cnt ) {
         int c = w.size();
-        for( int i = j ; i < c ; ++i )
-        {
+        for (int i = j ; i < c ; ++i) {
             int idx = w[i] - 'a';
-            if( not node->_c[idx] )
+            if (not node->_c[idx]) {
                 return false;
+            }
             node = node->_c[idx];
             // every time we find the end of word
-            if( node->stop )
-            {
-                if( i == c - 1 )
+            if (node->stop) {
+                if (i == c - 1) {
                     return cnt + 1 > 1;
+                }
                 // restart the search from the root
-                if( find( w, &_root, i + 1, cnt + 1 ) )
+                if (find( w, &_root, i + 1, cnt + 1)) {
                     return true;
+                }
             }
         }
         return false;
     }
-    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
-        if( words.size() < 2 )
-            return vector<string>();
+    std::vector<std::string> findAllConcatenatedWordsInADict(std::vector<std::string>& words) {
+        if (words.size() < 2)
+            return std::vector<std::string>();
 
         // build trie
-        for( auto const& w : words )
-            fill( w );
+        for (auto const & w : words)
+            fill(w);
 
-        vector<string> result;
+        std::vector<std::string> result;
         // check each word against trie
-        for( auto const& w : words )
-            if( find( w, &_root, 0, 0 ) )
-                result.push_back( w );
+        for (auto const & w : words)
+            if (find(w, &_root, 0, 0))
+                result.push_back(w);
         return result;
     }
 };
