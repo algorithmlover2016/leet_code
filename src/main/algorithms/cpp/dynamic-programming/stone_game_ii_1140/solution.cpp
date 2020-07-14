@@ -28,9 +28,8 @@ private:
             return memo[index][m];
         }
         int res = INT_MAX;
-        int tmp = 0;
         for (int step = 1; step <= dM; step++) {
-            res = std::min(res, tmp = dpHelper(piles, memo, index + step, std::max(m, step)));
+            res = std::min(res, dpHelper(piles, memo, index + step, std::max(m, step)));
         }
         return memo[index][m] = piles[index] - res;
     }
