@@ -9,7 +9,7 @@ public:
             return false;
         }
 #ifndef LIMIT_MEMORY
-        vector<vector<int> > dp(nSize, vector<int>(nSize, 0));
+        std::vector<std::vector<int> > dp(nSize, std::vector<int>(nSize, 0));
         // the follow loopping means that the diff = 0;
         for (int index = 0; index < nSize; index++) {
             dp[index][index] = piles[index];
@@ -24,7 +24,7 @@ public:
         return dp[0][nSize - 1];
 #elif
         // init dp with piels, which means that the diff is zero;
-        vector<int> dp(piles);
+        std::vector<int> dp(piles);
         for (int diff = 1; diff < nSize; diff++) {
             for (int index = 0; index < nSize - diff; index++) {
                 // the reason why can do this is that the diff is increasing one by one.
@@ -37,6 +37,5 @@ public:
         }
         return dp[0];
 #endif
-        
     }
 };
