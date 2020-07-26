@@ -17,7 +17,7 @@ public:
         
         for (int diff = 1; diff < nSize; diff++) {
             for (int index = 0; index < nSize - diff; index++) {
-                dp[index][index + diff] = max(piles[index] - dp[index + 1][index + diff], 
+                dp[index][index + diff] = std::max(piles[index] - dp[index + 1][index + diff], 
                                              piles[index + diff] - dp[index][index + diff - 1]);
             }
         }
@@ -31,7 +31,7 @@ public:
                 // which means dp[index + 1] represents dp[index + 1][index + diff], and
                 // dp[index] represents dp[index][diff - 1]
                 // when you don't update dp[index], it saves the last exterior loop where diff can be called preDiff which is curDiff minus one;
-                dp[index] = max(piles[index] - dp[index + 1], 
+                dp[index] = std::max(piles[index] - dp[index + 1], 
                                              piles[index + diff] - dp[index]);
             }
         }
