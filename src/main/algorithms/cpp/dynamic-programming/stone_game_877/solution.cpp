@@ -2,7 +2,7 @@
 
 class Solution {
 public:
-    bool stoneGame(vector<int>& piles) {
+    bool stoneGame(std::vector<int>& piles) {
         // copying method from https://leetcode.com/problems/stone-game/discuss/154610/C%2B%2BJavaPython-DP-or-Just-return-true
         const int nSize = piles.size();
         if (nSize == 0) {
