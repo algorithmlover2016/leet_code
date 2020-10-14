@@ -1,0 +1,4 @@
+greedy solution with stack
+first: the one that is already append can skip, which means if appended here, there won't be the smallest
+second: if the one is smaller than that have been already insert, and they will appear later, there need roll back
+third: find the right position and then append it;
