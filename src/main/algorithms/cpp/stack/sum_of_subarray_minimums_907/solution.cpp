@@ -70,3 +70,25 @@ public:
 private:
     int const MOD = 1e9 + 7;
 };
+
+class Solution {
+public:
+
+    int sumSubarrayMins(std::vector<int> const & A) {
+        //no of greater elements on left/right with cur as minimum element
+         int res = 0, n = A.size(), j, k;
+         std::stack<int> s;
+        for (int i = 0; i <= n; ++i) {
+            while (!s.empty() && A[s.top()] > (i == n ? 0 : A[i])) {
+                j = s.top(), s.pop();
+                k = s.empty() ? -1 : s.top();
+                res = (res + A[j] * (i - j) * (j - k)) % MOD;
+            }
+            s.push(i);
+        }
+        return res;
+    }
+
+private:
+    int const MOD = 1e9 + 7;
+};
