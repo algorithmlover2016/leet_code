@@ -37,6 +37,7 @@ public:
 class Solution {
 public:
     bool isMatch(std::string const & s, std::string const & p) {
+        // plagiarizing from https://leetcode.com/problems/wildcard-matching/discuss/17810/Linear-runtime-and-constant-space-solution
         const char *sStart = s.c_str(), *pStart = p.c_str();
 
         const char *sRecord = nullptr;
@@ -65,5 +66,4 @@ public:
         }
         return !(*pStart); // can't using nullptr == pStart as a judgement
     }
-
 };
