@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+execute_*
 
 # tmp or bak file
 *.bak
