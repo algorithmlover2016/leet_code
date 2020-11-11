@@ -1,1 +1,1 @@
-g++ -std=c++11 -o main conver_char_to_string_10_ways.cpp 
+g++ -std=c++11 -o conver_char_to_string_10_ways conver_char_to_string_10_ways.cpp
