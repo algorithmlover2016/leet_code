@@ -1,1 +1,2 @@
-g++ -std=c++11 -o execute_conver_char_to_string_10_ways conver_char_to_string_10_ways.cpp
+g++ -std=c++11 -o execute_conver_char_to_string_10_ways conver_char_to_string_10_ways.cpp && ./execute_conver_char_to_string_10_ways
+g++ -std=c++11 -O2 -Wall -pedantic -pthread -oexecute_tuple_map_key tuple_map_key.cpp && ./execute_tuple_map_key
