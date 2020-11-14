@@ -96,3 +96,59 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    int closestToTarget(vector<int>& arr, int target) {
+        int tail = 0;
+        int segSize = 200;
+        vector<int> quick;
+        quick.push_back(arr[0]);
+
+        for(int i = 1, index = 0, c = 1; i < arr.size(); ++i) {
+            auto val = arr[i];
+            if (arr[tail] != val) {
+                arr[++tail] = val;
+
+                if (c == 0) {
+                    quick.push_back(val);
+                } else {
+                    quick.back() &= val;
+                }
+
+                if (++c == segSize) {
+                    c = 0;
+                    ++index;
+                }
+            }
+        }
+
+        int ans = abs(arr[0]-target);
+
+        for (int i = 0; i <= tail; ++i) {
+            int j = i;
+            int val = 0xffffffff;
+            while(j <= tail) {
+                if (j % segSize == 0) {
+                    int tmp = val & quick[j/segSize];
+
+                    if (tmp >= target) {
+                        val = tmp;
+                        ans = min(ans, abs(val-target));
+                        j += segSize;
+                        continue;
+                    }
+                }
+
+                val &= arr[j++];
+                ans = min(ans, abs(val-target));
+
+                if (val < target) break;
+            }
+
+            if (ans == 0) break;
+        }
+
+        return ans;
+    }
+};
