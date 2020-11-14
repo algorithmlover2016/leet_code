@@ -58,6 +58,7 @@ public:
         int ans = 0;
         for (ans = 0; n > 0; n &= (n - 1)) {
             // why do like this?
+            // Start from LSB to MSB, what we need to do on a higher bit is already done on the lower bits.
             ans = -(ans + (n ^ (n - 1)));
             // std::cout << "ans: " << ans << "\t";
         }
