@@ -4,6 +4,7 @@
 class Solution {
 public:
     std::vector<std::vector<int>> candyCrush(std::vector<std::vector<int>> & board) {
+        // plagiarizing from https://www.youtube.com/watch?v=IcyOjlzySXI
         if (board.empty() || board[0].empty()) {
             return board;
         }
