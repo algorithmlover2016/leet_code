@@ -5,7 +5,7 @@ class Solution {
 public:
     int numDecodings(std::string const & s) {
         // plagiarizing from https://www.youtube.com/watch?v=_kg-U4j0gQg
-        // the
+        // Boundary conditions
         if (s.empty() || '0' == s[0]) {
             return 0;
         }
