@@ -1,7 +1,9 @@
 #include "../../head.h"
 
 // #define DEBUG
-// #define TEST_2
+#define TEST
+#define TEST_2
+#define POSTASSIGN
 class Solution {
 public:
     std::vector<int> mostSimilar(int n,
@@ -58,12 +60,22 @@ public:
         std::cout << "targetEndCity: " << targetEndCity << "\n";
 #endif
 
+#ifdef POSTASSIGN
         std::vector<int> ans(targetPathSize, targetEndCity);
         for (int step = targetPathSize; step > 1; step--) {
             targetEndCity = parents[step][targetEndCity];
             ans[step - 2] = targetEndCity;
-#ifdef DEBUG
+    #ifdef DEBUG
             std::cout << "reverse City: " << targetEndCity << "\n";
+    #endif
+#else
+        std::vector<int> ans(targetPathSize);
+        for (int step = targetPathSize; step > 0; step--) {
+            ans[step - 1] = targetEndCity;
+            targetEndCity = parents[step][targetEndCity];
+    #ifdef DEBUG
+            std::cout << "reverse City: " << targetEndCity << "\n";
+    #endif
 #endif
         }
         return ans;
@@ -73,7 +85,7 @@ private:
     static int const ROAD_S = 0;
     static int const ROAD_E = 1;
 };
-
+#ifdef TEST
 int main() {
 
 #ifdef TEST_2
@@ -113,3 +125,4 @@ int main() {
 #endif
     return 0;
 }
+#endif
