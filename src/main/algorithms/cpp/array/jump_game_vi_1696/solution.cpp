@@ -33,3 +33,20 @@ public:
 
     }
 };
+
+class SolutionBetter {
+public:
+    int maxResult(std::vector<int> const & nums, int k) {
+        std::vector<int> dp(nums.size(), INT_MIN);
+        dp[0] = nums[0];
+        for(int i = 0; i < nums.size(); i++) {
+            for(int j = 1; j + i < nums.size() && j <= k; j++) {
+                dp[i + j]=std::max(dp[i + j], dp[i] + nums[i + j]);
+                if (nums[i + j] >= 0) {
+                    break;
+                }
+            }
+        }
+        return dp.back();
+    }
+};
