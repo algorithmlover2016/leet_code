@@ -43,6 +43,8 @@ public:
             for(int j = 1; j + i < nums.size() && j <= k; j++) {
                 dp[i + j]=std::max(dp[i + j], dp[i] + nums[i + j]);
                 if (nums[i + j] >= 0) {
+                    // when there is a bigger one, there is no need to compute the latter with dp[i],
+                    // so we can break the loop
                     break;
                 }
             }
