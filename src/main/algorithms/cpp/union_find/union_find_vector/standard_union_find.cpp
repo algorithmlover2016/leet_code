@@ -4,6 +4,9 @@ Union::Union(int size) {
     parentIndex.resize(size);
     rank.resize(size, 1);
     cnt.resize(size, 1);
+    for (int idx = 0; idx < size; idx++) {
+        parentIndex[idx] = idx;
+    }
 }
 
 int Union::findRoot(int const x) {
