@@ -1,0 +1,2 @@
+posMost = 1 + 2 + 3 + 4 + 5 + ... + n = n * (n - 1) / 2;
+(posMost - abs(target)) / 2 == 0 then we just adjust a number to make posMost = abs(targe)
