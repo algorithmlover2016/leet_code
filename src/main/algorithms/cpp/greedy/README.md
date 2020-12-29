@@ -1,0 +1,1 @@
+greedy method solution
