@@ -71,6 +71,13 @@ public:
         for (int idx = 0; idx < aliceValuesSize; idx++) {
             comb.push_back({{-aliceValues[idx] - bobValues[idx], aliceValues[idx], bobValues[idx]}});
         }
+        /*
+        std::vector<std::vector<int>> comb(aliceValuesSize);
+
+        for (int idx = 0; idx < aliceValuesSize; idx++) {
+            comb[idx] = {-aliceValues[idx] - bobValues[idx], aliceValues[idx], bobValues[idx]};
+        }
+           */
         std::sort(comb.begin(), comb.end());
         std::array<int, ANS_LEN> ans = {0, 0} ;
         for (int idx = 0; idx < aliceValuesSize; idx++) {
