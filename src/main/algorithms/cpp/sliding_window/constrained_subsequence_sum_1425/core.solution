@@ -1,0 +1,3 @@
+dp Solution with decrease queue
+    the current idx-th max value depends on its former k elemnts
+    we can use decrease queue to record the sliding window's max value
