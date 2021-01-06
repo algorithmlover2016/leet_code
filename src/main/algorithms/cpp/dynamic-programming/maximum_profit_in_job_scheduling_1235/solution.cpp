@@ -29,11 +29,9 @@ public:
 
         std::map<int, int> dpMemo{{0, 0}};
         for (auto const & job : jobs) {
-            /* // job can't be reference if using tuple_size wrong explanation
-            if (TUPLE_PROFIX >= std::tuple_size<decltype(job)>::value) {
+            if (TUPLE_PROFIX >= std::tuple_size<std::remove_reference<decltype(job)>::type>::value) {
                 continue;
             }
-            */
             int curProfit = std::prev(dpMemo.upper_bound(std::get<TUPLE_START_TIME>(job)))->second +
                 std::get<TUPLE_PROFIX>(job);
             if (curProfit > dpMemo.rbegin()->second) {
