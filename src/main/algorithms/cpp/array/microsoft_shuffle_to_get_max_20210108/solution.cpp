@@ -20,10 +20,8 @@ public:
             auto it = sortedA.upper_bound(B[idx]);
             if (it == sortedA.end()) {
                 it = sortedA.begin();
-                ans[idx] = *it;
-            } else {
-                ans[idx] =*it;
             }
+            ans[idx] =*it;
             sortedA.erase(it);
         }
         return ans;
