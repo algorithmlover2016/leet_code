@@ -21,7 +21,7 @@ public:
             if (it == sortedA.end()) {
                 it = sortedA.begin();
             }
-            ans[idx] =*it;
+            ans[idx] = *it;
             sortedA.erase(it);
         }
         return ans;
