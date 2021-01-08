@@ -1,0 +1,5 @@
+using stack to storage the non-pair parentheses index.
+if there is a pair, we will pop them out of the stack
+after traversal, the index left in stack are who can't construct a pair
+so we just need to compute the interval to get the max len
+
