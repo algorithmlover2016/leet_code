@@ -7,6 +7,7 @@
 class SolutionDp {
 public:
     std::vector<int> maxSumOfSubSequence(std::vector<int> const & nums) {
+        // plagiarizing idea from https://blog.csdn.net/sgbfblog/article/details/8032464
         int const numsSize = nums.size();
         if (JUST_RETURN >= numsSize) {
             return nums;
@@ -41,6 +42,7 @@ private:
 class Solution {
 public:
     std::vector<int> maxSumOfSubSequence(std::vector<int> const & nums) {
+        // plagiarizing idea from https://blog.csdn.net/sgbfblog/article/details/8032464
         int const numsSize = nums.size();
         if (JUST_RETURN >= numsSize) {
             return nums;
@@ -76,6 +78,7 @@ private:
 class SolutionMaxSum {
 public:
     int maxSumOfSubSequence(std::vector<int> const & nums) {
+        // plagiarizing idea from https://blog.csdn.net/sgbfblog/article/details/8032464
         int const numsSize = nums.size();
         if (JUST_RETURN > numsSize) {
             return 0;
