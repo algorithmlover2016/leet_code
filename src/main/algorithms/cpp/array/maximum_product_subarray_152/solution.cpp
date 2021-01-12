@@ -68,6 +68,7 @@ private:
 class Solution {
 public:
     int maxProduct(std::vector<int> const & nums) {
+        // plagiarizing from accept answer
         if (nums.size() == 0) {
             return 0;
         }
@@ -80,10 +81,10 @@ public:
             int curr = nums[i];
             int curMax = curr * maxSoFar;
             int curMin = curr * minSoFar;
-            int temp_max = std::max(curr, std::max(curMax, curMin));
+            int tempMax = std::max(curr, std::max(curMax, curMin));
             minSoFar = std::min(curr, std::min(curMax, curMin));
 
-            maxSoFar = temp_max;
+            maxSoFar = tempMax;
 
             result = std::max(maxSoFar, result);
         }
