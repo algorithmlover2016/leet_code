@@ -1,4 +1,4 @@
-inputFile=${1:-"res"}
+inputFile=${1:-"./res"}
 # dirName=$(sed 's/ /_/g' $1 | tr '[A-Z]' '[a-z]')
 dirName=$(sed  's/\(.*\)\(\.\) \(.*\)/\3 \1/g' "${inputFile}" | sed 's/[ -]/_/g' | sed 's/[^[:alnum:]_]/_/g' | tr '[A-Z]' '[a-z]')
 mkdir "./${dirName}" &&\
