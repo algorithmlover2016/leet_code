@@ -126,9 +126,7 @@ public:
                 ans.pop_back();
             }
             if (idx - ans.size() == needDelNum) {
-                for (; idx < numsSize; idx++) {
-                    ans.emplace_back(nums[idx]);
-                }
+                getLeftEle(nums, idx, ans);
                 return ans;
             }
             ans.emplace_back(nums[idx]);
