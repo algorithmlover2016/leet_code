@@ -1,0 +1,2 @@
+at last, we must have do a job that the last element multiply 1 (left) and 1 (right)
+so we can split the array at any point. That's the dp status
