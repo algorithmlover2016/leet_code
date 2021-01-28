@@ -46,7 +46,7 @@ public:
 };
 
 #define DEBUG
-class Solution {
+class SolutionWrongAnswer {
 public:
     int longestWPI(std::vector<int> const & hours) {
         int const hoursSize = hours.size();
