@@ -44,7 +44,6 @@ public:
             }
         }
         return head->next;
-
     }
 };
 
@@ -77,4 +76,66 @@ private:
         node->next = (nullptr == l2) ? l1 : l2;
         return pre_head.next;
     }
+};
+
+class SolutionMinHeap {
+protected:
+    class MyCompareInNode {
+    private:
+        bool _reverse;
+    public:
+        MyCompareInNode(bool reverse = false) : _reverse(reverse) {
+        }
+        bool operator()(ListNode const * const left, ListNode const * const right) {
+            if (nullptr == right) {
+                return _reverse;
+            }
+            if (nullptr == left || left->val <= right->val) {
+                return !_reverse;
+            } else {
+                return _reverse;
+            }
+        }
+    };
+
+public:
+    ListNode* mergeKLists(std::vector<ListNode*> & lists) {
+        // time complexity
+        // Klog(K) + 2NKlog(K), K = lists.size(), K = listsSize
+        // first construct a minHeap with size K, need Klog(K)
+        // second, all the left element will be push into and pop out of the minHeap, which need 2logK
+
+        if (lists.empty()) {
+            return static_cast<ListNode*>(nullptr);
+        }
+
+        int const listsSize = lists.size();
+        if (JUST_ONE_ELE == listsSize) {
+            return lists[0];
+        }
+        typedef std::priority_queue<ListNode*, std::vector<ListNode*>, MyCompareInNode> Heap;
+        Heap minHeap(MyCompareInNode(true));
+
+        ListNode* dummyHead = new ListNode(-1);
+        ListNode* cur = dummyHead;
+        for (int idx = 0; idx < listsSize; idx++) {
+            if (nullptr != lists[idx]) {
+                minHeap.push(lists[idx]);
+            }
+        }
+        while (!minHeap.empty()) {
+            // find the min ele
+            ListNode* next = minHeap.top(); minHeap.pop();
+            // add a new ele into minHeap
+            if (nullptr != next->next) {
+                minHeap.push(next->next);
+            }
+            // link the min ele to the result list
+            cur->next = next;
+            cur = cur->next;
+        }
+        return dummyHead->next;
+    }
+private:
+    static int const JUST_ONE_ELE = 1;
 };
