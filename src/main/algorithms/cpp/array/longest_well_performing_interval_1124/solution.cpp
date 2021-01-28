@@ -76,3 +76,35 @@ public:
         return ans;
     }
 };
+
+#define DEBUG
+class Solution {
+public:
+    int longestWPI(std::vector<int> const & hours) {
+        int const hoursSize = hours.size();
+        std::vector<int> preSum(hoursSize + 1, 0);
+        std::vector<int> decStack;
+        for (int idx = 0; idx < hoursSize; idx++) {
+            preSum[idx + 1] = preSum[idx] + (hours[idx] > 8 ? 1 : -1);
+            // find the smaller preSum that first appear
+            if (decStack.empty() || preSum[decStack.back()] > preSum[idx + 1]) {
+                decStack.emplace_back(idx + 1);
+            }
+        }
+
+        int ans = 0;
+        for (int idx = hoursSize - 1; idx >= ans; idx--) {
+            if (preSum[idx + 1] > 0) {
+                // ans = std::max(ans, idx + 1);
+                ans = idx + 1;
+                break;
+            }
+            while (!decStack.empty() && preSum[decStack.back()] < preSum[idx + 1]) {
+                ans = std::max(ans, idx + 1 - decStack.back());
+                decStack.pop_back();
+            }
+        }
+
+        return ans;
+    }
+};
