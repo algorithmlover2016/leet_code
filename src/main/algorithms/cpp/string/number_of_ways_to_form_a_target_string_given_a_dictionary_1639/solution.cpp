@@ -136,3 +136,67 @@ private:
     static int const MOD = 1e9 + 7;
     int const INIT_FLAG = -1;
 };
+
+class SolutionRemoveStatic_cast {
+public:
+    int numWays(std::vector<std::string> const & words, std::string const & target) {
+        if (words.empty() || words[0].empty() || target.empty()) {
+            return 0;
+        }
+        int const wordLen = words.back().size();
+        int const targetSize = target.size();
+
+        // plagiarizing idea from https://youtu.be/udKsbPQu2T8
+        std::vector<std::unordered_map<char, int>> colLetterCntMap(wordLen);
+        for (int wordIdx = 0; wordIdx < wordLen; wordIdx++) {
+            for (auto const & word : words) {
+                colLetterCntMap[wordIdx][word[wordIdx]]++;
+            }
+        }
+
+        std::vector<std::vector<int>> dpMemo(wordLen,
+                                             std::vector<int>(targetSize, INIT_FLAG));
+
+        return dfs(words, target, dpMemo, colLetterCntMap, 0, 0);
+    }
+
+
+
+    long long int dfs(std::vector<std::string> const & words,
+            std::string const & target,
+            std::vector<std::vector<int>> & dpMemo,
+            std::vector<std::unordered_map<char, int>> const & colLetterCntMap,
+            int wordIdx, int targetIdx) {
+        int const wordLen = words.back().size();
+        int const targetSize = target.size();
+        if (targetIdx == targetSize) {
+            return 1;
+        }
+
+        if (wordIdx == wordLen) {
+            return 0;
+        }
+
+        if (INIT_FLAG != dpMemo[wordIdx][targetIdx]) {
+            return dpMemo[wordIdx][targetIdx];
+        }
+
+        // not using this character, we just only skip only once.
+        long long int ans = dfs(words, target, dpMemo, colLetterCntMap, wordIdx + 1, targetIdx) % MOD;
+
+        long long int cntTargetLetter = 0;
+        int curAns = 0;
+
+        char const & targetLetter = target[targetIdx];
+        if (colLetterCntMap[wordIdx].find(targetLetter) != colLetterCntMap[wordIdx].end()) {
+            curAns = dfs(words, target, dpMemo, colLetterCntMap, wordIdx + 1, targetIdx + 1);
+            cntTargetLetter = colLetterCntMap[wordIdx].at(targetLetter);
+            ans += curAns * cntTargetLetter;
+        }
+        return dpMemo[wordIdx][targetIdx] = ans % MOD;
+    }
+
+private:
+    static int const MOD = 1e9 + 7;
+    long long int const INIT_FLAG = -1;
+};
