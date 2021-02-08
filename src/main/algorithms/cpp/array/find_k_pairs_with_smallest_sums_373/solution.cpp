@@ -63,3 +63,60 @@ private:
     static int const ROW_IDX = 1;
     static int const COL_IDX = 2;
 };
+
+class Solution {
+protected:
+    friend class Comp;
+    class Comp {
+    private:
+        bool _reverse;
+    public:
+        Comp(bool reverse = false) : _reverse(reverse) {
+        }
+        bool operator()(std::tuple<int, int, int> const & left, std::tuple<int, int, int> const & right) {
+            if (std::get<Solution::VAL_IDX>(left) <= std::get<Solution::VAL_IDX>(right)) {
+                return !_reverse;
+            } else {
+                return _reverse;
+            }
+        }
+    };
+
+public:
+    std::vector<std::vector<int>> kSmallestPairs(std::vector<int> const & nums1, std::vector<int> const & nums2, int k) {
+        // plagiarizing idea from https://leetcode.com/problems/find-k-pairs-with-smallest-sums/discuss/84551/simple-Java-O(KlogK)-solution-with-explanation
+        std::vector<std::vector<int>> ans;
+        int const nums1Size = nums1.size();
+        if (JUST_ZERO == nums1Size) {
+            return ans;
+        }
+        int const nums2Size = nums2.size();
+        if (JUST_ZERO == nums2Size) {
+            return ans;
+        }
+        typedef std::priority_queue<std::tuple<int, int, int>, std::vector<std::tuple<int, int, int>>, Comp> MaxHeap;
+        MaxHeap minHeap(Comp(true));
+        for (int nums1Idx = 0; nums1Idx < nums1Size && nums1Idx < k; nums1Idx++) {
+            minHeap.push(std::make_tuple(nums1[nums1Idx] + nums2[0], nums1Idx, 0));
+        }
+
+        while (k-- > 0 && !minHeap.empty()) {
+            auto const & ele = minHeap.top();
+            int nums1Idx = std::get<NUMS1_IDX>(ele);
+            int nums2Idx = std::get<NUMS2_IDX>(ele);
+            minHeap.pop();
+            ans.push_back({nums1[nums1Idx], nums2[nums2Idx]});
+            if (++nums2Idx < nums2Size) {
+                minHeap.push(std::make_tuple(nums1[nums1Idx] + nums2[nums2Idx], nums1Idx, nums2Idx));
+            }
+        }
+        return ans;
+    }
+
+private:
+    static int const JUST_ZERO = 0;
+    static int const EX_MOST_LEFT_INDEX = -1;
+    static int const VAL_IDX = 0;
+    static int const NUMS1_IDX = 1;
+    static int const NUMS2_IDX = 2;
+};
