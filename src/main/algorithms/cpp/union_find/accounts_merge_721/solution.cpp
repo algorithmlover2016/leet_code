@@ -49,7 +49,7 @@ public:
 };
 
 class Solution {
-protect:
+protected:
     // union find with rank
     struct DisjointSet {
         std::vector<int> parent;
@@ -84,7 +84,7 @@ protect:
                 std::swap(a, b);
                 // merge(b, a);
                 // return;
-            } 
+            }
             parent[a] = b;
             if(rank[a] == rank[b]) {
                 rank[b] += 1;
