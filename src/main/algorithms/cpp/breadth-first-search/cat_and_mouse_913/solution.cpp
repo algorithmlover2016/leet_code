@@ -192,3 +192,128 @@ public:
     }
 
 };
+
+
+class Solution {
+public:
+    struct Position {
+        int mousePos;
+        int catPos;
+        int curTurn;
+        int ans;
+        Position(int mouse, int cat, int next, int ans_) :
+            mousePos(mouse), catPos(cat), curTurn(next), ans(ans_) {
+            }
+    };
+
+    int catMouseGame(std::vector<std::vector<int>> const & graph) {
+        int const nodesLen = graph.size();
+        int state[MAX_SIZE][MAX_SIZE][TURN_SIZE] = {DRAW};
+        int childCnt[MAX_SIZE][MAX_SIZE][TURN_SIZE] = {0};
+        for (int mouse = 0; mouse < nodesLen; mouse++) {
+            for (int cat = 0; cat < nodesLen; cat++) {
+                childCnt[mouse][cat][MOUSE_IDX] = graph[mouse].size();
+                childCnt[mouse][cat][CAT_IDX] = graph[cat].size();
+                if (HOLE == graph[cat][JUST_ZERO]) {
+                    // cat can't jump into HOLE
+                    childCnt[mouse][cat][CAT_IDX]--;
+                }
+                // cat can't jump from HOLE
+            }
+            childCnt[mouse][HOLE][CAT_IDX] = 0;
+        }
+
+        std::queue<Position> que;
+
+        // init mouse will always win
+        for (int cat = 1; cat < nodesLen; cat++) {
+            Position mP1(HOLE, cat, MOUSE_IDX, MOUSE_WIN);
+            state[HOLE][cat][MOUSE_IDX] = MOUSE_WIN;
+            que.push(mP1);
+
+            Position mP2(HOLE, cat, CAT_IDX, MOUSE_WIN);
+            state[HOLE][cat][CAT_IDX] = MOUSE_WIN;
+            que.push(mP2);
+        }
+
+        // init cat will always win
+        for (int cat = 1; cat < nodesLen; cat++) {
+            Position cP1(cat, cat, MOUSE_IDX, CAT_WIN);
+            state[cat][cat][MOUSE_IDX] = CAT_WIN;
+            que.push(cP1);
+
+            Position cP2(cat, cat, CAT_IDX, CAT_WIN);
+            state[cat][cat][CAT_IDX] = CAT_WIN;
+            que.push(cP2);
+        }
+
+        while (!que.empty()) {
+            Position p = que.front(); que.pop();
+            if (CAT_IDX == p.curTurn) {
+                // now it's cat's turn, and
+                // its previous turn is mouseTurn and the previous status can be
+                for (int const nei : graph[p.mousePos]) {
+                    if (DRAW != state[nei][p.catPos][MOUSE_IDX]) {
+                        // the state already update
+                        continue;
+                    }
+
+                    if (MOUSE_WIN == p.ans) {
+                        // mouse can jump from previous state to cur staus with won
+                        state[nei][p.catPos][MOUSE_IDX] = MOUSE_WIN;
+                        Position mP(nei, p.catPos, MOUSE_IDX, MOUSE_WIN);
+                        que.push(mP);
+                    } else if (CAT_WIN == p.ans) {
+                        // mouse can't win when taking this step, just record a fail jump
+                        --childCnt[nei][p.catPos][MOUSE_IDX];
+                        if (JUST_ZERO == childCnt[nei][p.catPos][MOUSE_IDX]) {
+                            // no matter how to jump, it will make cat win
+                            state[nei][p.catPos][MOUSE_IDX] = CAT_WIN;
+                            Position cP(nei, p.catPos, MOUSE_IDX, CAT_WIN);
+                            que.push(cP);
+                        }
+                    }
+                }
+            } else {
+                for (int const nei : graph[p.catPos]) {
+                    if (HOLE == nei) {
+                        // cat can't jump from HOLE
+                        continue;
+                    }
+                    if (DRAW != state[p.mousePos][nei][CAT_IDX]) {
+                        continue;
+                    }
+
+                    if (CAT_WIN == p.ans) {
+                        state[p.mousePos][nei][CAT_IDX] = CAT_WIN;
+                        Position cP(p.mousePos, nei, CAT_IDX, CAT_WIN);
+                        que.push(cP);
+                    } else if (MOUSE_WIN == p.ans) {
+                        --childCnt[p.mousePos][nei][CAT_IDX];
+                        if (JUST_ZERO == childCnt[p.mousePos][nei][CAT_IDX]) {
+                            state[p.mousePos][nei][CAT_IDX] = MOUSE_WIN;
+                            Position mP(p.mousePos, nei, CAT_IDX, MOUSE_WIN);
+                            que.push(mP);
+                        }
+                    }
+                }
+            }
+        }
+        return state[1][2][0];
+    }
+
+private:
+    static int const MAX_SIZE = 50;
+
+    static int const MOUSE_WIN = 1;
+    static int const CAT_WIN = 2;
+    static int const DRAW = 0;
+
+    static int const TURN_SIZE = 2;
+    static int const MOUSE_IDX = 0;
+    static int const CAT_IDX = 1;
+
+    static int const HOLE = 0;
+
+    static int const JUST_ZERO = 0;
+};
