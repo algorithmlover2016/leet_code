@@ -46,10 +46,10 @@ public:
                 K--; // insert into a new element
             }
             while (K < 0) {
-                if (0 == --visited[A[start]]) {
+                if (0 == --visited[A[start++]]) {
                     K++;
                 }
-                start++; // remove a element from the start
+                // start++; // remove a element from the start
             }
             res += index - start + 1; // the 1 means its self;
         }
