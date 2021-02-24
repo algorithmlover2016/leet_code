@@ -19,9 +19,13 @@ public:
                 dpMemo[idx + 1] = 0;
                 pre = idx;
             } else if (A[idx] < L) {
+                // no need to check idx > 0: if idx == 0, dpMemo[idx] = 0
+                /*
                 if (idx > 0) {
                     dpMemo[idx + 1] = dpMemo[idx];
                 }
+                */
+                dpMemo[idx + 1] = dpMemo[idx];
             } else {
                 dpMemo[idx + 1] = idx - pre;
             }
