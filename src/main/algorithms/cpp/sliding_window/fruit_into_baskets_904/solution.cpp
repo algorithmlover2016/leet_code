@@ -112,3 +112,32 @@ public:
         return j - i;
     }
 };
+
+class Solution {
+public:
+    int totalFruit(std::vector<int> const & tree) {
+        // plagiarizing from https://leetcode-cn.com/problems/number-of-subarrays-with-bounded-maximum/solution/xi-fa-dai-ni-xue-suan-fa-yi-ci-gao-ding-qian-zhu-2/
+        return atMost(2, tree);
+    }
+
+    int atMost(int k, std::vector<int> const & tree) {
+        int ans = 0;
+        std::unordered_map<int, int> count;
+        for (int left = 0, right = 0; right < tree.size(); right++) {
+            if (JUST_ZERO == count[tree[right]]++) {
+                // have not visited this type
+                k -= 1;
+            }
+            while (JUST_ZERO > k) {
+                if (JUST_ZERO == --count[tree[left++]]) {
+                    k += 1;
+                }
+            }
+            ans = std::max(ans, right - left + 1);
+        }
+        return ans;
+    }
+
+private:
+    static int const JUST_ZERO = 0;
+};
