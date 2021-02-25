@@ -125,3 +125,29 @@ private:
     static int const JUST_RETURN = 1;
     static int const INIT_MIN = INT_MIN;
 };
+
+class Solution {
+public:
+    int maxSubArray(std::vector<int> const & nums) {
+        // plagiarizing idea from https://blog.csdn.net/sgbfblog/article/details/8032464
+        int const numsSize = nums.size();
+        if (JUST_RETURN > numsSize) {
+            return INIT_MIN;
+        }
+        if (JUST_RETURN == numsSize) {
+            return nums.back();
+        }
+
+        int maxSum = INIT_MIN;
+        std::vector<int> dpMemo(numsSize + 1, 0);
+        for (int idx = 0; idx < numsSize; idx++) {
+            dpMemo[idx + 1] = std::max(dpMemo[idx] + nums[idx], nums[idx]);
+            maxSum = std::max(maxSum, dpMemo[idx + 1]);
+        }
+
+        return maxSum;
+    }
+private:
+    static int const JUST_RETURN = 1;
+    static int const INIT_MIN = INT_MIN;
+};
