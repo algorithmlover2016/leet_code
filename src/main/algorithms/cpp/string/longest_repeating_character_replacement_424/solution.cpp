@@ -4,6 +4,7 @@
 class Solution {
 public:
     int characterReplacement(std::string const & s, int k) {
+        // plagiairizing idea from https://youtu.be/HtYHehvE5tQ
         std::vector<int> cnt(UPPER_LETTERS_NUM, 0);
         int ans = 0;
         for ( int i = 0, j = 0; j < s.size(); j++) {
