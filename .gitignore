@@ -41,4 +41,4 @@ execute_*
 .DS_Store
 res
 res.txt
-bin_output
+bin_output*
