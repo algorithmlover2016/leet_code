@@ -79,3 +79,40 @@ public:
         return ans;
     }
 };
+
+class SolutionDP {
+public:
+    std::vector<TreeNode*> generateTrees(int n) {
+        // plagiarizing from https://leetcode.com/problems/unique-binary-search-trees-ii/discuss/31493/Java-Solution-with-DP
+        std::vector<std::vector<TreeNode*>> ans(n + 1);
+        if (0 == n) {
+            return ans[0];
+        }
+        ans[0].emplace_back(nullptr);
+        for (int len = 1; len <= n; len++) {
+            for (int root = 1; root <= len; root++) {
+                for (TreeNode * lNode : ans[root - 1]) {
+                    // root root + 1, if taken root as offset, the latter will be len - root - 1, len - root - 2...
+                    for (TreeNode * rNode : ans[len - root]) {
+                        TreeNode * rootPtr = new TreeNode(root);
+                        rootPtr->left = lNode;
+                        rootPtr->right = deepClone(rNode, root);
+                        ans[len].emplace_back(rootPtr);
+
+                    }
+                }
+            }
+        }
+        return ans.back();
+    }
+private:
+    TreeNode * deepClone(TreeNode * node, int offset) {
+        if (nullptr == node) {
+            return nullptr;
+        }
+        TreeNode * newNode = new TreeNode(node->val + offset);
+        newNode->left = deepClone(node->left, offset);
+        newNode->right = deepClone(node->right, offset);
+        return newNode;
+    }
+};
