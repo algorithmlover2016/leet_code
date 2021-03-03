@@ -1,0 +1,7 @@
+https://www.cnblogs.com/Renyi-Fan/p/7508063.html
+https://blog.csdn.net/qq_40160605/article/details/80642518
+
+I think mayge the given relationships can be constructed many trees who are not connected. I add a dummy root as
+    root's root
+So the return value will be zero(dummy root) means can't find a lca. and trees' height will add one
+    compared without dummy root

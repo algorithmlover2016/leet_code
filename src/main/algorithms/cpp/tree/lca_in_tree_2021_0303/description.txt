@@ -1,0 +1,36 @@
+#1062 : 最近公共祖先·一
+输入
+    每个测试点（输入文件）有且仅有一组测试数据。
+    每组测试数据的第1行为一个整数N，意义如前文所述。
+    每组测试数据的第2~N+1行，每行分别描述一对父子关系，其中第i+1行为两个由大小写字母组成的字符串Father_i, Son_i，
+        分别表示父亲的名字和儿子的名字。
+    每组测试数据的第N+2行为一个整数M，表示小Hi总共询问的次数。
+    每组测试数据的第N+3~N+M+2行，每行分别描述一个询问，其中第N+i+2行为两个由大小写字母组成的字符串Name1_i, Name2_i,
+        分别表示小Hi询问中的两个名字。
+    对于100%的数据，满足N<=10^2，M<=10^2, 且数据中所有涉及的人物中不存在两个名字相同的人（即姓名唯一的确定了一个人）。
+
+输出
+    对于每组测试数据，对于每个小Hi的询问，输出一行，表示查询的结果：如果根据已知信息，可以判定询问中的两个人存在共同
+        的祖先，则输出他们的所有共同祖先中辈分最低的一个人的名字，否则输出-1。
+    
+样例输入
+11
+JiaYan JiaDaihua
+JiaDaihua JiaFu
+JiaDaihua JiaJing
+JiaJing JiaZhen
+JiaZhen JiaRong
+JiaYuan JiaDaishan
+JiaDaishan JiaShe
+JiaDaishan JiaZheng
+JiaShe JiaLian
+JiaZheng JiaZhu
+JiaZheng JiaBaoyu
+3
+JiaBaoyu JiaLian
+JiaBaoyu JiaZheng
+JiaBaoyu LinDaiyu
+    样例输出
+    JiaDaishan
+    JiaZheng
+    -1
