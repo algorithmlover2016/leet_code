@@ -14,23 +14,23 @@
         的祖先，则输出他们的所有共同祖先中辈分最低的一个人的名字，否则输出-1。
     
 样例输入
-11
-JiaYan JiaDaihua
-JiaDaihua JiaFu
-JiaDaihua JiaJing
-JiaJing JiaZhen
-JiaZhen JiaRong
-JiaYuan JiaDaishan
-JiaDaishan JiaShe
-JiaDaishan JiaZheng
-JiaShe JiaLian
-JiaZheng JiaZhu
-JiaZheng JiaBaoyu
-3
-JiaBaoyu JiaLian
-JiaBaoyu JiaZheng
-JiaBaoyu LinDaiyu
-    样例输出
+    11
+    JiaYan JiaDaihua
+    JiaDaihua JiaFu
+    JiaDaihua JiaJing
+    JiaJing JiaZhen
+    JiaZhen JiaRong
+    JiaYuan JiaDaishan
+    JiaDaishan JiaShe
+    JiaDaishan JiaZheng
+    JiaShe JiaLian
+    JiaZheng JiaZhu
+    JiaZheng JiaBaoyu
+    3
+    JiaBaoyu JiaLian
+    JiaBaoyu JiaZheng
+    JiaBaoyu LinDaiyu
+样例输出
     JiaDaishan
     JiaZheng
     -1
