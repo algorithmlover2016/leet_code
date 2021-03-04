@@ -2,9 +2,11 @@
 
 
 #define TEST_MAIN
+// #define USING_STL_FUNC_GREATER
 class Solution {
 public:
     int maximumNumberOfOnes(int width, int height, int sideLength, int maxOnes) {
+        // plagiarizing from https://www.cnblogs.com/lz87/p/12521679.html
         if (1 >= sideLength) {
             if (0 == maxOnes) {
                 return 0;
@@ -21,9 +23,13 @@ public:
                 cnt[mapW * sideLength + mapH]++;
             }
         }
+#ifdef USING_STL_FUNC_GREATER
+        std::sort(cnt.begin(), cnt.end(), std::greater<int>());
+#else
         std::sort(cnt.begin(), cnt.end(), [](int i, int j) {
                 return i > j;
                 });
+#endif
         int ans = 0;
         for (int ones = 0; ones < maxOnes; ones++) {
             // each time we need to find the maxNum at cnt if we have a posibility to set 1;
