@@ -1,0 +1,16 @@
+Key Observation:
+If we only consider the top left square sub-matrix and put in allowed max number of 1s in it,
+    the rest of non-overlapping sub-matrix is bascially a replica of the top left sub-matrix.
+    Thus we can divide the entire matrix input non-overlapping sub-matrices, the rightmost and
+    bottom sub-matrices may have smaller dimensions if width or height is not divisible by sideLength. 
+
+Based on the above observation, we derive the following algorithm.
+1.  Divide the input matrix into non-overlapping sub-matrices.
+2. For each cell (i, j) in the input matrix, map it to the same relative position with the top-left
+    sub-matrix (i % sideLength, j % sideLength). If we put a 1 in such a cell, we know that we can
+    put a 1 to all other cells with the same relative positions in other sub-matrices, without increasing
+    the number of 1s in the same sub-matrix. Increment the contribution of 1s from mapped position
+    (i % sideLength, j % sideLength) by 1. 
+3. After iterating all cells in input matrix in step 2, we've got all the contribution count of 1s in M
+    with positions mapped to the top-left sub-matrix. Since we want to maximize the total number of 1s in M,
+    we sort this count in descending order and add the first maxOnes counts as the final answer.
