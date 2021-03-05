@@ -1,0 +1,7 @@
+postorder: search in the left, and then right, and then cur node.
+    if left found one, right found one, then there must be p, q all be found
+    if left found, cur found, then must be two different node found
+
+postorder: cnt
+
+postorder: node, just return cur root
