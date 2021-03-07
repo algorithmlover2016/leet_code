@@ -29,6 +29,7 @@ public:
 class SolutionWithMapStore {
 public:
     std::vector<int> findDiagonalOrder(std::vector<std::vector<int>> const & nums) {
+        // plagiarizing from https://leetcode.com/problems/diagonal-traverse-ii/discuss/597741/Clean-Simple-Easiest-Explanation-with-a-picture-and-code-with-comments
         if (nums.empty() || nums[0].empty()) {
             return {};
         }
@@ -43,6 +44,29 @@ public:
         std::vector<int> ans;
         for (int key = 0; key <= maxKey; key++) {
             for (auto it = records[key].rbegin(); it != records[key].rend(); it++) {
+                ans.emplace_back(*it);
+            }
+        }
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    std::vector<int> findDiagonalOrder(std::vector<std::vector<int>> const & nums) {
+        // plagiarizing from https://leetcode.com/problems/diagonal-traverse-ii/discuss/597741/Clean-Simple-Easiest-Explanation-with-a-picture-and-code-with-comments
+        if (nums.empty() || nums[0].empty()) {
+            return {};
+        }
+        std::map<int, std::vector<int>> records;
+        for (int row = 0; row < nums.size(); row++) {
+            for (int col = 0; col < nums[row].size(); col++) {
+                records[row + col].emplace_back(nums[row][col]);
+            }
+        }
+        std::vector<int> ans;
+        for (auto & [key, vals] : records) {
+            for (auto it = vals.rbegin(); it != vals.rend(); it++) {
                 ans.emplace_back(*it);
             }
         }
