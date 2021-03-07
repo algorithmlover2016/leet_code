@@ -131,3 +131,178 @@ public:
         return state.Result();
     }
 };
+
+// #define SPLIT_PLUS_MINUS_WITH_MULTIPLY_DIVIDE
+class Solution {
+public:
+    int calculate(std::string const & ss) {
+        // plagiarizing idea from https://youtu.be/lNSTvbVRpIA
+        std::string s(ss + '+');
+        std::vector<long> nums;
+        std::vector<char> ops;
+        int const sSize = s.size();
+        long num = 0;
+        for (int idx = 0; idx < sSize; idx++) {
+            char const c = s[idx];
+            if (SPACE == c) {
+                continue;
+            }
+            if (std::isdigit(c)) {
+                num  = num * 10 + c - '0';
+            } else {
+                #ifdef SPLIT_PLUS_MINUS_WITH_MULTIPLY_DIVIDE
+                if (opPriority(c) < 2) {
+                    while (!nums.empty()) {
+                        long num1 = nums.back();
+                        num = evaluate(num1, num, ops.back());
+                        nums.pop_back(); ops.pop_back();
+                    }
+                    nums.emplace_back(num);
+                    ops.emplace_back(c);
+                } else {
+                    while (!ops.empty() && opPriority(ops.back()) >= opPriority(c)) {
+                        long num1 = nums.back();
+                        num = evaluate(num1, num, ops.back());
+                        nums.pop_back(); ops.pop_back();
+                    }
+                    nums.emplace_back(num);
+                    ops.emplace_back(c);
+                }
+                #else
+                    while (!ops.empty() && opPriority(ops.back()) >= opPriority(c)) {
+                        long num1 = nums.back();
+                        num = evaluate(num1, num, ops.back());
+                        nums.pop_back(); ops.pop_back();
+                    }
+                    nums.emplace_back(num);
+                    ops.emplace_back(c);
+                #endif
+
+                num = 0;
+            }
+        }
+        return nums.back();
+    }
+private:
+    int opPriority(char const op) {
+        int ans = 0;
+        switch (op) {
+            case MINUS_OP:
+            case PLUS_OP:
+                ans = 1;break;
+            case MULTIPLY_OP:
+            case DIVIDE_OP:
+                ans = 2;break;
+            default:
+                ans = 0;break;
+        }
+        return ans;
+    }
+    long evaluate(int num1, int num2, char const op) {
+        int ans = 0;
+        switch (op) {
+            case MINUS_OP: ans = num1 - num2; break;
+            case PLUS_OP: ans = num1 + num2; break;
+            case MULTIPLY_OP: ans = num1 * num2; break;
+            case DIVIDE_OP: ans = num1 / num2; break;
+            default: ans = 0;break;
+        }
+        return ans;
+
+    }
+private:
+    static char const MINUS_OP = '-';
+    static char const PLUS_OP = '+';
+    static char const MULTIPLY_OP = '*';
+    static char const DIVIDE_OP = '/';
+    static char const SPACE = ' ';
+};
+
+// #define SPLIT_PLUS_MINUS_WITH_MULTIPLY_DIVIDE
+class Solution {
+public:
+    int calculate(std::string const & s) {
+        // plagiarizing idea from https://youtu.be/lNSTvbVRpIA
+        std::vector<long> nums;
+        std::vector<char> ops;
+        int const sSize = s.size();
+        long num = 0;
+        for (int idx = 0; idx <= sSize; idx++) {
+            char c = '+';
+            if (idx < sSize) {
+                c = s[idx];
+            }
+
+            if (SPACE == c) {
+                continue;
+            }
+            if (std::isdigit(c)) {
+                num  = num * 10 + c - '0';
+            } else {
+                #ifdef SPLIT_PLUS_MINUS_WITH_MULTIPLY_DIVIDE
+                if (opPriority(c) < 2) {
+                    while (!nums.empty()) {
+                        long num1 = nums.back();
+                        num = evaluate(num1, num, ops.back());
+                        nums.pop_back(); ops.pop_back();
+                    }
+                    nums.emplace_back(num);
+                    ops.emplace_back(c);
+                } else {
+                    while (!ops.empty() && opPriority(ops.back()) >= opPriority(c)) {
+                        long num1 = nums.back();
+                        num = evaluate(num1, num, ops.back());
+                        nums.pop_back(); ops.pop_back();
+                    }
+                    nums.emplace_back(num);
+                    ops.emplace_back(c);
+                }
+                #else
+                    while (!ops.empty() && opPriority(ops.back()) >= opPriority(c)) {
+                        long num1 = nums.back();
+                        num = evaluate(num1, num, ops.back());
+                        nums.pop_back(); ops.pop_back();
+                    }
+                    nums.emplace_back(num);
+                    ops.emplace_back(c);
+                #endif
+
+                num = 0;
+            }
+        }
+        return nums.back();
+    }
+private:
+    int opPriority(char const op) {
+        int ans = 0;
+        switch (op) {
+            case MINUS_OP:
+            case PLUS_OP:
+                ans = 1;break;
+            case MULTIPLY_OP:
+            case DIVIDE_OP:
+                ans = 2;break;
+            default:
+                ans = 0;break;
+        }
+        return ans;
+    }
+    long evaluate(int num1, int num2, char const op) {
+        int ans = 0;
+        switch (op) {
+            case MINUS_OP: ans = num1 - num2; break;
+            case PLUS_OP: ans = num1 + num2; break;
+            case MULTIPLY_OP: ans = num1 * num2; break;
+            case DIVIDE_OP: ans = num1 / num2; break;
+            default: ans = 0;break;
+        }
+        return ans;
+
+    }
+private:
+    static char const MINUS_OP = '-';
+    static char const PLUS_OP = '+';
+    static char const MULTIPLY_OP = '*';
+    static char const DIVIDE_OP = '/';
+    static char const SPACE = ' ';
+};
