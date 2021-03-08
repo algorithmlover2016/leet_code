@@ -220,6 +220,19 @@ int main() {
     assert(ansIdx2 == 3);
     assert(ansBfs2 == 3);
 
+
+    std::vector<std::vector<int>> grid3{{{1, 1, 0, 0, 0}, {1, 0, 0, 0, 0}, {0, 0, 0, 0, 1}, {0, 0, 0, 1, 1}}};
+    int ans3 = obj.numDistinctIslands(grid3);
+    int ansIdx3 = objIdxPair.numDistinctIslands(grid3);
+    int ansBfs3 = objBfs.numDistinctIslands(grid3);
+
+#ifdef PRINT_TO_SCREEN
+    std::cout << ans3 << "\t" << ansIdx3 << "\t" << ansBfs3 << "\n";
+#endif
+    assert(ans3 == 2);
+    assert(ansIdx3 == 2);
+    assert(ansBfs3 == 2);
+
     std::cout << "TEST SUCCESSFULLY" << std::endl;
     return 0;
 }
