@@ -5,6 +5,7 @@
 class Solution {
 public:
     int maxEqualFreq(std::vector<int> const & nums) {
+        // plagiarizing from https://leetcode.com/problems/maximum-equal-frequency/discuss/403743/JavaC%2B%2BPython-Only-2-Cases%3A-Delete-it-or-not
         int const numsSize = nums.size();
         std::unordered_map<int, int> cnts;
         std::unordered_map<int, int> freqs;
@@ -32,3 +33,4 @@ public:
 
     }
 };
+
