@@ -1,0 +1,4 @@
+tcp 3 ,4 : 交换报文号， 建立通道；2 倍时间断开。流量控制（满启动、快重传 , https 加密流程
+redis：数据类型、编码类型. 哨兵机制 , 分布式锁、布伦过滤器, 持久化, 一致化hash, 主从同步, 高性能
+skiplist ：kk
+mysql: 索引类型、innodb 引擎 b+tree, 事物隔离级别,以及修复方式 acid / log日志 redo\binlog\undo
