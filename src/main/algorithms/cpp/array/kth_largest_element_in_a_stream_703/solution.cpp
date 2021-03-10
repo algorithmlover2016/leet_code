@@ -1,7 +1,7 @@
 #include "../../head.h"
 
 
-#define DEBUG
+// #define DEBUG
 class KthLargest {
 public:
     KthLargest(int k_, std::vector<int> const & nums_) : k(k_), nums(nums_) {
@@ -10,7 +10,8 @@ public:
     int add(int val) {
         nums.emplace_back(val);
 
-        quickSort(nums, 0, nums.size() - 1);
+        // quickSort(nums, 0, nums.size() - 1);
+        quickSortDD(nums, 0, nums.size() - 1);
         #ifdef DEBUG
         for (int idx = 0; idx < nums.size(); idx++) {
             std::cout << nums[idx] << "\t";
@@ -22,6 +23,29 @@ public:
         return nums[targetIdx];
     }
 private:
+
+    void quickSortDD(std::vector<int> & nums, int left, int right) {
+        if (left >= right) {
+            return ;
+        }
+        int low = left, high = right;
+        int mid = nums[left + (right - left) / 2];
+        while (left < right) {
+            while (nums[left] < mid) {
+                left++;
+            }
+            while (nums[right] > mid) {
+                right--;
+            }
+            if (left <= right) {
+                std::swap(nums[left++], nums[right--]);
+            }
+        }
+        quickSortDD(nums, low, right);
+        quickSortDD(nums, left, high);
+
+    }
+
     void quickSort(std::vector<int> & nums, int left, int right) {
         if (left >= right) {
             return ;
