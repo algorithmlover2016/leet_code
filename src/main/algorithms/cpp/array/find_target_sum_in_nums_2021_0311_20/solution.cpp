@@ -9,15 +9,13 @@ public:
             return {};
         }
         std::unordered_map<int, int> num2Idx;
-        for (int idx = 0; idx < numsSize; idx++) {
-            num2Idx[nums[idx]] = idx;
-        }
 
         for (int idx = 0; idx < numsSize; idx++) {
             int diff = target - nums[idx];
             if (num2Idx.find(diff) != num2Idx.end()) {
                 return {num2Idx[diff], idx};
             }
+            num2Idx[nums[idx]] = idx;
         }
 
         return {};
@@ -43,7 +41,6 @@ int main() {
 #endif
 
     std::vector<int> rightAns{{0, 1}};
-    std::sort(ans.begin(), ans.end());
     assert(ans == rightAns);
 
     std::cout << "TEST SUCCESSFULLY" << std::endl;
