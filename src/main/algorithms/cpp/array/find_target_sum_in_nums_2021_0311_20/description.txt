@@ -1,0 +1,11 @@
+Given a array nums (unique elements), and a number target, find two elements whose sum is target
+return the index of the two elements.
+Example:
+    Input: nums = [2, 7, 9, 10], target = 9;
+    Output: {0, 1}
+    Explanation:
+        9 = 9, there is only one element whose sum is 9;
+        2 + 7 = 9, so we return {0, 1}
+    
+Note:
+    Assuming that the result will always exists
