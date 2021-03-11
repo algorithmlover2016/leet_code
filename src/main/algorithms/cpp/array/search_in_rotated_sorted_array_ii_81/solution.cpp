@@ -104,3 +104,42 @@ public:
         return nums[l] == target;
     }
 };
+
+class Solution {
+public:
+    bool search(std::vector<int>& nums, int target) {
+        if (nums.empty()) {
+            return false;
+        }
+        int const numsSize = nums.size();
+        // return *std::min_element(nums.begin(), nums.end());
+        int left = 0;
+        int right = numsSize - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (target == nums[mid] || target == nums[right] || target == nums[left]) {
+                return true;
+            }
+            if (nums[left] == nums[right]) {
+                left++;
+                continue;
+            }
+            if (nums[mid] > nums[right]) {
+                // from left to mid is increasing
+                if (target > nums[mid] || target < nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            } else {
+                if (target > nums[mid] && target < nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        // plagiarizing idea from the upper solution to make while loop condition exclude left == right
+        return nums[left] == target;
+    }
+};
