@@ -1,5 +1,6 @@
 #include "../../head.h"
 
+#define TEST_SolutionSortDepends
 // #define DEBUG
 #define TEST_MAIN
 class Solution {
@@ -97,32 +98,12 @@ public:
 
 #ifdef TEST_MAIN
 #define PRINT_TO_SCREEN
-// #define TEST_SolutionSortDepends
 int main() {
 #ifdef TEST_SolutionSortDepends
     SolutionSortDepends obj;
-    std::string s1("aabbcc");
-    std::string ans1 = obj.rearrangeString(s1, 3);
-#ifdef PRINT_TO_SCREEN
-    std::cout << ans1 << "\n";
-#endif
-    assert("abcabc" == ans1);
-
-    std::string s2("aaabc");
-    std::string ans2 = obj.rearrangeString(s2, 3);
-#ifdef PRINT_TO_SCREEN
-    std::cout << ans2 << "\n";
-#endif
-    assert("" == ans2);
-
-    std::string s3("aaadbbcc");
-    std::string ans3 = obj.rearrangeString(s3, 2);
-#ifdef PRINT_TO_SCREEN
-    std::cout << ans3<< "\n";
-#endif
-    assert("abacabcd" == ans3); // the order is not right
 #else
     Solution obj;
+#endif
     std::string s1("aabbcc");
     std::string ans1 = obj.rearrangeString(s1, 3);
 #ifdef PRINT_TO_SCREEN
@@ -143,7 +124,7 @@ int main() {
     std::cout << ans3<< "\n";
 #endif
     assert("abacabcd" == ans3); // the order is not right
-#endif
+
     std::cout << "TEST SUCCESSFULLY" << std::endl;
 }
 #endif
