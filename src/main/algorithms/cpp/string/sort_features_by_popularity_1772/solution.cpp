@@ -1,6 +1,7 @@
 #include "../../head.h"
 
 #define SPLIT_BY_GETLINE
+// #define TEST_SolutionSortDepends
 #define DEBUG
 #define TEST_MAIN
 class Solution {
@@ -84,10 +85,91 @@ private:
     static int const STR_IDX_IDX = 2;
 };
 
+class SolutionSortDepends {
+public:
+    std::vector<std::string> sortFeatures(std::vector<std::string> const & features,
+            std::vector<std::string> const & responses) {
+        std::unordered_map<std::string, std::pair<int, int>> featuresCnt; // feature as key, and pair.first is freq, second is index
+        for (int idx = 0; idx < features.size(); idx++) {
+            featuresCnt[features[idx]] = std::make_pair(0, idx);
+        }
+#ifdef DEBUG
+        std::cout << "features done" << "\n";
+#endif
+
+        // statistic all the frequence of features;
+        for (auto const & str : responses) {
+
+#ifdef SPLIT_BY_GETLINE
+            std::vector<std::string> ans = splitByGetLine(str, ' ');
+#else 
+            std::vector<std::string> ans = splitByFind(str, ' ');
+#endif
+            std::set<std::string> moveRepeatAns(ans.begin(), ans.end());
+            for (std::string const & ele : moveRepeatAns) {
+                if (featuresCnt.find(ele) != featuresCnt.end()) {
+                    featuresCnt[ele].first++;
+                }
+            }
+        }
+
+#ifdef DEBUG
+        std::cout << "split and statictic done" << "\n";
+#endif
+        // to construct a maxHeap need a cmp function
+        auto cmp = [&] (std::string const & left, std::string const & right) {
+            int leftCnt = featuresCnt[left].first;
+            int rightCnt = featuresCnt[right].first;
+
+            return leftCnt < rightCnt || (leftCnt == rightCnt && featuresCnt[left].second >= featuresCnt[right].second);
+        };
+        typedef std::priority_queue<std::string, std::vector<std::string>, decltype(cmp)> MaxHeap;
+        MaxHeap maxHeap(cmp);
+        for (auto const & [strKey, pairVal] : featuresCnt) {
+            maxHeap.emplace(strKey);
+        }
+
+        std::vector<std::string> ans;
+        while (!maxHeap.empty()) {
+            auto const & ele = maxHeap.top();
+            ans.emplace_back(ele);
+            maxHeap.pop();
+        }
+        return ans;
+
+    }
+private:
+    std::vector<std::string> splitByGetLine(std::string const & str, char const delimeter) {
+        std::vector<std::string> ans;
+        std::stringstream ss(str);
+        std::string item;
+        while (std::getline(ss, item, delimeter)) {
+            ans.emplace_back(item);
+        }
+        return ans;
+    }
+
+    std::vector<std::string> splitByFind(std::string const & str, char const delimeter) {
+        std::vector<std::string> ans;
+        std::string::size_type prePos = 0, pos = 0;
+        while ((pos = str.find(delimeter, pos)) != std::string::npos) {
+            ans.emplace_back(str.substr(prePos, pos - prePos));
+            prePos = ++pos;
+        }
+        ans.emplace_back(str.substr(prePos, pos - prePos));
+        return ans;
+    }
+};
+
 #ifdef TEST_MAIN
 #define PRINT_TO_SCREEN
+
 int main() {
+#ifdef TEST_SolutionSortDepends
+    SolutionSortDepends obj;
+#else
     Solution obj;
+#endif
     std::vector<std::string> features{{"cooler","lock","touch"}};
     std::vector<std::string> responses{{"i like cooler cooler", "lock touch cool", "locker like touch"}};
     std::vector<std::string> ans = obj.sortFeatures(features, responses);
@@ -116,3 +198,4 @@ int main() {
     return 0;
 }
 #endif
+
