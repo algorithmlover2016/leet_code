@@ -152,7 +152,7 @@ public:
             profitsCapPair[idx] = std::make_pair(profits[idx], capital[idx]);
         }
 
-        auto cmp = [&] (std::pair<int, int> const & left, std::pair<int, int> const & right) {
+        auto cmp = [] (std::pair<int, int> const & left, std::pair<int, int> const & right) {
             return left.second < right.second || (left.second == right.second && left.first >= right.first);
         };
         std::sort(profitsCapPair.begin(), profitsCapPair.end(), cmp);
