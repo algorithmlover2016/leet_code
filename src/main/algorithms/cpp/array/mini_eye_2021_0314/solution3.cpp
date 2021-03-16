@@ -4,18 +4,32 @@
 
 // #define DEBUG
 #define MATH_COMPUTE_LAYER
+// #define DIGIT_INPUT
 int main() {
     std::vector<int> directions{{0, 1, 0, -1, 0}};
     int N = 0;
     int M = 0;
     
     std::cin >> N >> M;
+    std::cin.get();
     std::vector<std::vector<int>> nums(N, std::vector<int>(M));
+
+#ifdef DIGIT_INPUT
+    for (int row = 0; row < N; row++) {
+        std::string ss;
+        std::getline(std::cin, ss);
+        for (int col = 0; col < ss.size(); col++) {
+            nums[row][col] = ss[col] - '0';
+        }
+    }
+#else
     for (int row = 0; row < N; row++) {
         for (int col = 0; col < M; col++) {
             std::cin >> nums[row][col];
         }
     }
+#endif
+
     int ans = 0;
     for (int row = 0; row < N; row++) {
         for (int col = 0; col < M; col++) {
