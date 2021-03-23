@@ -88,3 +88,28 @@ public:
         return m;
     }
 };
+
+class Solution {
+public:
+    int longestMountain(std::vector<int> const & a) {
+        int n = (int) a.size();
+        int ans = 0, start = 0;
+        while (start < n) {
+            int end = start;
+
+            if (end + 1 < n and a[end] < a[end + 1]){
+                while (end + 1 < n and a[end] < a[end + 1]) {
+                    end++;
+                }
+                if (end + 1 < n and a[end] > a[end + 1]) {
+                    while(end + 1 < n and a[end] > a[end + 1]) {
+                        end++;
+                    }
+                    ans = std::max(ans, end - start + 1);
+                }
+            }
+            start = std::max(end, start + 1);
+        }
+        return ans;
+    }
+};
