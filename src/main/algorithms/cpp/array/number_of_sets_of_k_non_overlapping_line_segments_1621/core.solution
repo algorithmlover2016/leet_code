@@ -1,0 +1,3 @@
+combination method: https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/discuss/898830/Python-O(N)-Solution-with-Prove
+how to call a function only once without multiprocess condition:
+    reference to https://www.cnblogs.com/baiyanhuang/archive/2010/11/13/1876677.html
