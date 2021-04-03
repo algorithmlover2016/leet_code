@@ -132,3 +132,39 @@ private:
     static char const OFFSET = 'a';
 
 };
+
+static constexpr std::pair<char, int> digChars[10] = {{'z', 0}, {'w', 2}, {'x', 6}, {'s', 7}, {'g', 8}, {'h', 3}, {'v', 5}, {'f', 4}, {'o', 1}, {'e', 9}};
+
+static string digWord[10] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+
+class Solution {
+public:
+    std::string originalDigits(std::string const & s) {
+        // support variables
+		int digits[10], tot = 0, alpha[123] = {};
+        // populating alpha
+        for (char c: s) {
+            alpha[c]++;
+        }
+        for (auto d: digChars) {
+            // getting the number of matches
+            int n = alpha[d.first];
+            // updating digits with the number of matches
+            digits[d.second] = n;
+            // updating tot by the number of needed characters
+            tot += n;
+            // clearing up alpha accordingly
+            for (char c: digWord[d.second]) {
+                alpha[c] -= n;
+            }
+        }
+        //  creating and populating res
+        std::string res(tot, '*');
+        for (int i = 0, j = 0; i < 10; i++) {
+            while(digits[i]--) {
+                res[j++] = i + '0';
+            }
+        }
+        return res;
+    }
+};
