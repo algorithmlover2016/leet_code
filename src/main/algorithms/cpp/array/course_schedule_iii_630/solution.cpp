@@ -12,6 +12,7 @@ protected:
         // increasing order
         return left[END_IDX] < right[END_IDX];
         // reference to https://stackoverflow.com/questions/52745026/heap-overflow-inside-custom-sort-function
+        // and https://en.cppreference.com/w/cpp/named_req/Compare
     }
 #endif
 public:
@@ -28,6 +29,7 @@ public:
             // increasing order
             return left[END_IDX] < right[END_IDX];
             // reference to https://stackoverflow.com/questions/52745026/heap-overflow-inside-custom-sort-function
+            // and https://en.cppreference.com/w/cpp/named_req/Compare
         };
         #endif
         std::sort(std::begin(courses), std::end(courses), cmp);
