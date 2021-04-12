@@ -237,7 +237,7 @@ public:
             }
             /*
                if kk == __builtin_popcount(an), sub == end;
-               if kk > __builtin_popcount(an); sub > end;
+               if kk > k; sub > end;
              */
             int r = n;
             for (; sub >= end; sub = (sub - 1) & an) {
@@ -274,38 +274,40 @@ public:
 class Solution {
 private:
     int solve(int mask, std::vector<int> & dp, std::vector<std::vector<int>> & adj, int & n, int & k) {
-        if( mask== ((1 << n) - 1)) {
+        if (mask== ((1 << n) - 1)) {
             // All courses are taken
             return 0;
         }
-        if(dp[mask] != -1) {
+        if (dp[mask] != -1) {
             // memoization
             return dp[mask];
         }
 
         std::vector<int> indeg(n,0);
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             if (mask & (1 << i)) {
+                // we have take the i course (from 0)
                 continue;
             }
             for(auto it: adj[i]) {
+                // the it dependents on i
                 indeg[it]++;
             }
         }
-        int temp=0;  // For a mask of all nodes with 0-indegree
+        int availNow = 0;  // For a mask of all nodes with 0-indegree
         for (int i = 0; i < n; i++) {
             if (indeg[i] == 0 && !(mask & (1 << i))) {
-                temp = temp | ( 1 << i);
+                availNow |= ( 1 << i);
             }
         }
-        int j = temp;
+        int j = availNow;
         int cnt = __builtin_popcount(j);  // count of nodes with 0-indegree
 
         int ans = n + 1;  // ans will be 'n' in the worst case, so take (n+1) as infinity
         if (cnt > k) {
-            for ( ; j; j = (j - 1) & temp) {
-                // iterate through all submasks of temp
-                cnt=__builtin_popcount(j);
+            for ( ; j; j = (j - 1) & availNow) {
+                // iterate through all submasks of availNow
+                cnt = __builtin_popcount(j);
                 if (cnt != k) {
                     continue;
                 }
@@ -318,10 +320,10 @@ private:
     }
 
 public:
-    int minNumberOfSemesters(int n, std::vector<std::vector<int>> const & d, int k) {
+    int minNumberOfSemesters(int n, std::vector<std::vector<int>> d, int k) {
         std::vector<int> dp(1 << n, -1);
         std::vector<std::vector<int>> adj(n);
-        for (int i=0; i<d.size(); i++) {
+        for (int i = 0; i < d.size(); i++) {
             d[i][0]--;
             d[i][1]--;
             adj[d[i][0]].push_back(d[i][1]);
