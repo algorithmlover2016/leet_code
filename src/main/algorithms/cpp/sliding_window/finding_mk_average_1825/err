@@ -1,0 +1,12 @@
+Line 38: Char 23: error: no matching member function for call to 'erase'
+            leftSmall.erase(needDelIt);
+            ~~~~~~~~~~^~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/9/bits/stl_multiset.h:639:7: note: candidate function not viable: no known conversion from 'std::reverse_iterator<std::_Rb_tree_const_iterator<int>>' to 'std::multiset<int, std::less<int>, std::allocator<int>>::const_iterator' (aka '_Rb_tree_const_iterator<int>') for 1st argument
+      erase(const_iterator __position)
+      ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/9/bits/stl_multiset.h:669:7: note: candidate function not viable: no known conversion from 'std::reverse_iterator<std::_Rb_tree_const_iterator<int>>' to 'const std::multiset<int, std::less<int>, std::allocator<int>>::key_type' (aka 'const int') for 1st argument
+      erase(const key_type& __x)
+      ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/9/bits/stl_multiset.h:691:7: note: candidate function not viable: requires 2 arguments, but 1 was provided
+      erase(const_iterator __first, const_iterator __last)
+      ^
