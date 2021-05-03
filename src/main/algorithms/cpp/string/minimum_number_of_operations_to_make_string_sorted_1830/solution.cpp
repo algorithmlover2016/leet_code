@@ -7,7 +7,8 @@ public:
     int makeStringSorted(std::string const & s) {
         // plagiarizing from https://www.youtube.com/watch?v=Lfiz6iwp4l8 and
         // https://leetcode.com/problems/minimum-number-of-operations-to-make-string-sorted/discuss/1163050/Python-O(26n)-math-solution-explained and
-        // https://leetcode.com/problems/minimum-number-of-operations-to-make-string-sorted/discuss/1164153/C%2B%2B-24-ms
+        // https://leetcode.com/problems/minimum-number-of-operations-to-make-string-sorted/discuss/1164153/C%2B%2B-24-ms and
+        // and https://en.wikipedia.org/wiki/Fermat%27s_little_theorem
 
         // accoding to https://en.wikipedia.org/wiki/Fermat%27s_little_theorem
         // if p is a prime number, then (a ^ (p - 1)) % p = 1 % p => (a ^ (p - 2) * a) % p = 1 % p;
