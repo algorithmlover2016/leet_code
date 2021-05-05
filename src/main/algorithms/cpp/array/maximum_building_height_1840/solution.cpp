@@ -94,6 +94,12 @@ public:
       for (int i = m; --i; ) {
           int d = a[i].first - a[i - 1].first;
           a[i - 1].second = std::min(a[i - 1].second, a[i].second + d);
+          // left is h1, d is the difference of index, right is h2;
+          // no matter h1 is larger or smaller than h2, let's assume that
+          // the max height from h1 to h2 is h. the delta from h to h2 + d is x
+          // h2 + d = h + x;
+          // h1 = h - x;
+          // h = (h1 + h2 + d) / 2;
           ans = std::max(ans, (a[i - 1].second + a[i].second + d) >> 1);
       }
       return ans;
