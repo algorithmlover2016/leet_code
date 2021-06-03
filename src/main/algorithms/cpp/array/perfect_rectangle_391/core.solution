@@ -1,0 +1,4 @@
+area = the sum of each area.
+each point except the corner of the final rectangle must appear even times, which means we can "insert and erase" or "xor"
+each point except the corner of the final rectangle must be represented with mask 3, 5, 10, 12, 15
+    if we use 1, 2, 4, 8 to represent the buttom-left, buttom-right, top-left and top-right seperately.
