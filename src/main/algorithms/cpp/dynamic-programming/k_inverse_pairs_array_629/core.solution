@@ -1,0 +1,11 @@
+We can use this formula to solve this problem
+    dp[i][j] //represent the number of permutations of (1...n) with k inverse pairs.
+    dp[i][j] = dp[i-1][j] + dp[i-1][j-1] + dp[i-1][j-2] + ..... +dp[i-1][j - i + 1]
+    Mathematical Proof:
+    dp[i][j] = dp[i-1][j] + dp[i-1][j-1] + ......+dp[i-1][j-i+1] as per definition ---(1)
+    But dp[i][j-1] = dp[i-1][j-1] + dp[i-1][j-2] + ....+ dp[i-1][j-i] as per definition ---(2)
+    
+    From (1) and (2)
+    dp[i][j] = dp[i-1][j] + (dp[i-1][j-1] + ......+dp[i-1][j-i+1]) + dp[i-1][j-i] - dp[i-1][j-i]
+    =>dp[i][j] = dp[i-1][j] + (dp[i-1][j-1] + ......+dp[i-1][j-i+1] + dp[i-1][j-i]) - dp[i-1][j-i]
+    =>dp[i][j] = dp[i-1][j] + dp[i][j-1] - dp[i-1][j-i]
