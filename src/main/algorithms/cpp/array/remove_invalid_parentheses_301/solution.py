@@ -8,7 +8,7 @@ class Solution:
             valid = []
             for s in level:
                 try:
-                    eval('0,' + filter('()'.count, s).replace(')', '),'))
+                    eval('0,' + "".join(filter('()'.count, s)).replace(')', '),'))
                     valid.append(s)
                 except:
                     pass
@@ -17,7 +17,7 @@ class Solution:
             level = {s[:i] + s[i+1:] for s in level for i in range(len(s))}
 
 class Solution2:
-    def removeInvalidParentheses(self, s):
+    def removeInvalidParentheses(self, s) -> list[str]:
         def isvalid(s):
             ctr = 0
             for c in s:
@@ -30,7 +30,7 @@ class Solution2:
             return ctr == 0
         level = {s}
         while True:
-            valid = filter(isvalid, level)
+            valid = list(filter(isvalid, level))
             if valid:
                 return valid
             level = {s[:i] + s[i+1:] for s in level for i in range(len(s))}
@@ -38,18 +38,14 @@ class Solution2:
 class Solution3:
     def removeInvalidParentheses(self, s):
         def isvalid(s):
-            ctr = 0
-            for c in s:
-                if c == '(':
-                    ctr += 1
-                elif c == ')':
-                    ctr -= 1
-                    if ctr < 0:
-                        return False
-            return ctr == 0
+            try:
+                eval('0,' + "".join(filter('()'.count, s)).replace(')', '),'))
+                return True
+            except:
+                pass
         level = {s}
         while True:
-            valid = filter(isvalid, level)
+            valid = list(filter(isvalid, level))
             if valid:
                 return valid
             level = {s[:i] + s[i+1:] for s in level for i in range(len(s))}
@@ -57,23 +53,30 @@ class Solution3:
 class Solution4:
     def removeInvalidParentheses(self, s):
         def isvalid(s):
-            s = filter('()'.count, s)
+            s = "".join(filter('()'.count, s))
             while '()' in s:
                 s = s.replace('()', '')
             return not s
         level = {s}
         while True:
-            valid = filter(isvalid, level)
+            valid = list(filter(isvalid, level))
             if valid:
                 return valid
             level = {s[:i] + s[i+1:] for s in level for i in range(len(s))}
 
 if __name__ == "__main__":
+    print("begin")
     obj = Solution()
+    print("debug")
     print(obj.removeInvalidParentheses("()())()"))
+    print("solution done")
+
     obj = Solution2()
     print(obj.removeInvalidParentheses("()())()"))
+    print("solution2 done")
     obj = Solution3()
     print(obj.removeInvalidParentheses("()())()"))
+    print("solution3 done")
     obj = Solution4()
     print(obj.removeInvalidParentheses("()())()"))
+    print("solution4 done")
