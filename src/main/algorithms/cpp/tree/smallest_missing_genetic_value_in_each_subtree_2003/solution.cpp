@@ -80,7 +80,7 @@ public:
 			return;
 		}
 		if (ranks[rootu] > ranks[rootv]) {
-			swap(rootu,rootv);
+			std::swap(rootu,rootv);
 		}
 		parents[rootu] = rootv;
 		if (ranks[rootu] == ranks[rootv]) {
@@ -140,7 +140,7 @@ public:
 				}
 				if (uf.find(v) != uf.find(u)) {
 					ans[u] = x;
-					uf.merge(u,parents[u]);
+					uf.merge(u, parents[u]);
 					u = parents[u];
 				} else {
 					++x;
