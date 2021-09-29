@@ -61,4 +61,3 @@ private:
 	static char const LOWERCASE_LETTER_START = 'a';
 	static char const MOST_LEFT_BOUNDARY_EXCLUDE = -1;
 };
-
