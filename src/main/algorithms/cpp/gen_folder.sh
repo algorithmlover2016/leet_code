@@ -4,5 +4,8 @@ dirName=$(sed  's/\(.*\)\(\.\) \(.*\)/\3 \1/g' "${inputFile}" | sed 's/[ -]/_/g'
 mkdir "./${dirName}" &&\
 cd "./${dirName}" &&\
 touch solution.cpp && touch description.txt && touch core.solution &&\
-echo "#include \"../../head.h\"\n\n\n" >> solution.cpp
+# add -e to enable interpretation of backslash escapes
+# reference to https://unix.stackexchange.com/questions/65803/why-is-printf-better-than-echo/65819#65819 and
+# https://github.com/git-for-windows/git/issues/3454#issuecomment-939253376
+echo -e "#include \"../../head.h\"\n\n\n" >> solution.cpp
 # sed 's/[A-Z]/\l&/g' $1
