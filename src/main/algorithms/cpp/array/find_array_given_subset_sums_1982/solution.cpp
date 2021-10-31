@@ -206,3 +206,62 @@ private:
 private:
     static int const ONLY_ONE = 1;
 };
+
+
+int speedup = [] { std::ios::sync_with_stdio(0); std::cin.tie(0); return 0; } ();
+
+class Solution {
+private:
+    unsigned short cnts[20001], cntb[20001], cur[20001];
+private:
+    inline int partition(std::vector<int> &v, int p, int i, int target) {
+        if (target <= 0) return target == 0 ? p : -1;
+        for (; i < v.size(); ++i) {
+            std::swap(v[p], v[i]);
+            int r = partition(v, p+1, i+1, target - v[p]);
+            if (r >= 0)  {
+                return r;
+            }
+            std::swap(v[p], v[i]);
+        }
+        return -1;
+    }
+
+public:
+    std::vector<int> recoverArray(int n, std::vector<int>& sums) {
+        std::vector<int> res; res.reserve(n);
+        std::sort(std::begin(sums), std::end(sums));
+        int base = sums[0], sz = sums.back() - base + 1, cp = 0;
+        std::fill(cnts, cnts+sz, 0);
+        cur[cp++] = 0; ++cnts[0];
+        
+        for (int i = 1, prev = 0, cnt = 1; i < std::size(sums); ++i) {
+            unsigned short v = sums[i] - base;
+            if (v == prev) {
+                ++cnt;
+             } else {
+                 prev = v, cnt = 1;
+             }
+            if (cnts[v] >= cnt) {
+                continue;
+            }
+            res.push_back(v);
+            
+            for (int j = 0; j < cp; ++j) {
+                cntb[j] = cnts[cur[j]];
+            }
+            for (int j = 0, je = cp; j < je; ++j) {
+                unsigned short vv = cur[j] + v;
+                if (!cnts[vv]) {
+                    cur[cp++] = vv;
+                }
+                cnts[vv] += cntb[j];
+            }
+        }
+        int pos = partition(res, 0, 0, -base);
+        for (int i = 0; i < pos; ++i) {
+            res[i] = -res[i];
+        }
+        return res;
+    }
+};
