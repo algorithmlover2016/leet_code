@@ -118,3 +118,91 @@ private:
 private:
     static int const ONLY_ONE = 1;
 };
+
+// #define DEBUG
+class Solution {
+public:
+    std::vector<int> recoverArray(int n, std::vector<int> sums) {
+        // plagiarizing from https://leetcode.com/problems/find-array-given-subset-sums/discuss/1418799/Python-Short-solution-(update)-explained
+        // trans from python code to cpp
+        if (ONLY_ONE > n) {
+            return {};
+        }
+        int sumsSize = sums.size();
+        // firstly, we need check the number of sums is correct.
+        assert(sumsSize == (1 << n));
+        // secondly, we sort the sums to make it ordered, then we can find the value which is closest to zero easily
+        int minVal = *std::min_element(std::begin(sums), std::end(sums));
+        for (int & sum : sums) {
+            // add an offset for all the sums to make the min sums will be zero
+            sum -= minVal;
+        }
+        #ifdef DEBUG
+        std::cout << "sums: ";
+        for (int sum : sums) {
+            std::cout << sum << ", ";
+        }
+        std::cout << "\n";
+        #endif
+
+
+        std::multiset<int> pre(std::begin(sums), std::end(sums)), cur;
+        std::vector<int> ans;
+        for (int idx = 0; idx < n; idx++) {
+            int num = *std::next(std::begin(pre)); // the second small sum must be a element which is the closest to zero
+            ans.emplace_back(num);
+            #ifdef DEBUG
+            std::cout << "cur num: " << num;
+            #endif
+            // remove all the sum which contains num;
+            while(pre.size()) {
+                // first we get the minimum val and then we remove the two sum of it and it + num;
+                auto first = pre.begin();
+                int firstVal = *first;
+                cur.insert(firstVal);
+                pre.erase(first);
+                pre.erase(pre.find(firstVal + num));
+            }
+            std::swap(pre, cur);
+            #ifdef DEBUG
+            std::cout << "\n";
+            #endif
+        }
+        #ifdef DEBUG
+        std::cout << "ans: ";
+        for (int num : ans) {
+            std::cout << num << ", ";
+        }
+        std::cout << '\n';
+        #endif
+        if (dfs(ans, -minVal, 0)) {
+            return ans;
+        } else {
+            return {};
+        }
+    }
+private:
+    bool dfs(std::vector<int> & nums, int target, int idx) {
+        int const numsSize = nums.size();
+        if (idx == numsSize) {
+            return 0 == target;
+        }
+        int curVal = nums[idx];
+        // if we do not take the curVal as a part of target
+        if (dfs(nums, target, idx + 1)) {
+            return true;
+        }
+
+        // if we use the element, we need change it to negative
+        nums[idx] = -curVal;
+        if (dfs(nums, target - curVal, idx + 1)) {
+            return true;
+        }
+        // if there is no answer, we should keep the same unchanged
+        nums[idx] = curVal;
+        return false;
+
+    }
+private:
+    static int const ONLY_ONE = 1;
+};
