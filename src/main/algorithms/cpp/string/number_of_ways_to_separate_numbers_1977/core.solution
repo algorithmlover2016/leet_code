@@ -1,0 +1,5 @@
+First, we should select the length of substring
+Second, we develop the code according to the constributions
+string comparison:
+    str.compare which will be O(n) time
+    compare a letter at core position with longest common prefix
