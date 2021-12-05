@@ -27,4 +27,4 @@
     }
     ```
 * ***BFS***<br>
-* **because no need to record the specified order or path, so we can do it together**<br>
+    * **because no need to record the specified order or path, so we can do it together**<br>
