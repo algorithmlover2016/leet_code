@@ -1,0 +1,2 @@
+# bit Tries, details to refer to maximum_genetic_difference_query_1938
+# similar to [../maximum_genetic_difference_query_1938](https://leetcode.com/problems/maximum-genetic-difference-query/) and [../count_pairs_with_xor_in_a_range_1803](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
