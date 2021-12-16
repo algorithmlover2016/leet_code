@@ -1,11 +1,10 @@
 #include "../../head.h"
 
 
-
 class Solution {
 private:
     static int const CHILDREN_LEN = 2;
-    static int const MAX_NUM_BITS_LEN = 30;
+    static int const MAX_NUM_BITS_LEN = 17;
     enum OPS {
         REMOVE = -1,
         ADD = 1,
@@ -35,23 +34,28 @@ private:
             }
             return (nullptr == bitChildren[leftOrRight] ? 0 : bitChildren[leftOrRight]->match(val, bitPos - 1));
         }
+
+        int countLessThan(int val, int limit, int bitPos = MAX_NUM_BITS_LEN) {
+            if (0 > bitPos) {
+                return 0;
+            }
+            int curBitVal = (1 << bitPos);
+            bool valBit = val & curBitVal, limitBit = limit & curBitVal, nextLayer = (val xor limit) & curBitVal;
+            return (limitBit && nullptr != bitChildren[valBit]) ? bitChildren[valBit]->cnts : 0 +
+                    (nullptr != bitChildren[nextLayer] ? bitChildren[nextLayer]->countLessThan(val, limit, bitPos - 1) : 0);
+
+        }
     };
 public:
-    int findMaximumXOR(std::vector<int> const & nums) {
+    int countPairs(std::vector<int> const & nums, int low, int high) {
         int const numsSize = nums.size();
         if (0 == numsSize) {
             return -1;
         }
-        for (int num : nums) {
-            bitTrieObj.addOrRemoveNode(num, OPS::ADD);
-        }
         int ans = 0;
         for (int num : nums) {
+            ans += bitTrieObj.countLessThan(num, high + 1) - bitTrieObj.countLessThan(num, low);
             bitTrieObj.addOrRemoveNode(num, OPS::ADD);
-            int xorVal = bitTrieObj.match(num);
-            if (xorVal > ans) {
-                ans = xorVal;
-            }
         }
         return ans;
     }
