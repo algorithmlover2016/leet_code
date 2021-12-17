@@ -41,13 +41,14 @@ private:
             }
             int curBitVal = (1 << bitPos);
             bool valBit = val & curBitVal, limitBit = limit & curBitVal, nextLayer = (val xor limit) & curBitVal;
-            return (limitBit && nullptr != bitChildren[valBit]) ? bitChildren[valBit]->cnts : 0 +
+            return ((limitBit && nullptr != bitChildren[valBit]) ? bitChildren[valBit]->cnts : 0) +
                     (nullptr != bitChildren[nextLayer] ? bitChildren[nextLayer]->countLessThan(val, limit, bitPos - 1) : 0);
 
         }
     };
 public:
     int countPairs(std::vector<int> const & nums, int low, int high) {
+        // plagiarizing from https://leetcode.com/problems/count-pairs-with-xor-in-a-range/discuss/1122495/C%2B%2B-with-picture
         int const numsSize = nums.size();
         if (0 == numsSize) {
             return -1;
