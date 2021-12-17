@@ -100,6 +100,7 @@ public:
         for (auto subTreeRoot : root2Leafs) {
             auto it = val2Nodes.find(subTreeRoot->val);
             if (it == val2Nodes.end()) {
+                // each root node of a bst can only be used once.
                 return nullptr;
             }
             subTreeRoot->left = it->second->left;
