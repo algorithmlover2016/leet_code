@@ -3,7 +3,7 @@
 
 // #define USE_VECTOR_NOT_MAP
 
-class Solution {
+class SolutionMayTLE {
 public:
     int countDifferentSubsequenceGCDs(std::vector<int> const & nums) {
         // plagiarizing from https://leetcode.com/problems/number-of-different-subsequences-gcds/discuss/1141309/Simple-explanation-or-O(n-*-sqrt-n)
@@ -55,4 +55,52 @@ private:
 private:
     static int const MAX_FACTORS_NUM = 200001;
 #endif
+};
+
+class Solution  {
+public:
+    int countDifferentSubsequenceGCDs(std::vector<int> const & nums) {
+        // plagiarizing from https://leetcode.com/problems/number-of-different-subsequences-gcds/discuss/1141361/Python-Python-2-solutions-%2B-2liner-explained
+        int ans = 0;
+        if (nums.empty()) {
+            return ans;
+        }
+
+        // records all the elements appearing in nums
+        std::unordered_set<int> numsSet(std::begin(nums), std::end(nums));
+
+        // get the max element in nums, the max gcd factor will never overpass max element
+        int const maxEle = 1 + (*std::max_element(std::begin(nums), std::end(nums)));
+
+        for (int factor = 1; factor < maxEle; factor++) {
+            int gFactor = 0;
+            // multiFac has factor as its factor which means multiFac % factor == 0
+            for (int multiFac = factor; multiFac < maxEle; multiFac += factor) {
+                // only existing element in nums can generate a gcd
+                if (numsSet.count(multiFac)) {
+                    // gcd will be non-increasing which means gFactor will be much less if it changed
+                    gFactor = gcd(gFactor, multiFac);
+                }
+                // we get a combinication which could combine a subsequence and take factor as its gcd
+                if (gFactor == factor) {
+                    break;
+                }
+            }
+            if (gFactor == factor) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+private:
+    int gcd(int left, int right) {
+        while (0 != right) {
+            int tmp = right;
+            right = left % right;
+            left = tmp;
+        }
+        return left;
+    }
+
 };
