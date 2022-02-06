@@ -57,6 +57,7 @@ private:
 #endif
 };
 
+// #define USE_VECTOR_INSTEADOF_SET
 class Solution  {
 public:
     int countDifferentSubsequenceGCDs(std::vector<int> const & nums) {
@@ -67,7 +68,14 @@ public:
         }
 
         // records all the elements appearing in nums
-        std::unordered_set<int> numsSet(std::begin(nums), std::end(nums));
+        #ifdef USE_VECTOR_INSTEADOF_SET
+        std::vector<bool> isExist(MAX_ELE_NUM, false);
+        for (int const num : nums) {
+            isExist[num] = true;
+        }
+        #else
+        std::unordered_set<int> isExist(std::begin(nums), std::end(nums));
+        #endif
 
         // get the max element in nums, the max gcd factor will never overpass max element
         int const maxEle = 1 + (*std::max_element(std::begin(nums), std::end(nums)));
@@ -77,7 +85,14 @@ public:
             // multiFac has factor as its factor which means multiFac % factor == 0
             for (int multiFac = factor; multiFac < maxEle; multiFac += factor) {
                 // only existing element in nums can generate a gcd
-                if (numsSet.count(multiFac)) {
+                if (
+                #ifdef USE_VECTOR_INSTEADOF_SET
+                    isExist[multiFac]
+                #else
+                    isExist.count(multiFac)
+                #endif
+                ) {
+
                     // gcd will be non-increasing which means gFactor will be much less if it changed
                     gFactor = gcd(gFactor, multiFac);
                 }
@@ -103,4 +118,8 @@ private:
         return left;
     }
 
+#ifdef USE_VECTOR_INSTEADOF_SET
+private:
+    static int const MAX_ELE_NUM = 200001;
+#endif
 };
