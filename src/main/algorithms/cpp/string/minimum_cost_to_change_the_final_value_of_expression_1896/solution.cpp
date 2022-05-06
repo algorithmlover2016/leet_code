@@ -2,6 +2,7 @@
 
 
 // #define DEBUG
+#define USE_LAMDA
 class Solution {
 public:
     int minOperationsToFlip(std::string const & expression) {
@@ -51,10 +52,29 @@ private:
 
         int change = ((valLeft + valRight == 1) ? 1 : (std::min(changeLeft, changeRight) + (valLeft ^ (curOp == AndOpChar))));
 
+        #ifdef USE_LAMDA
+        auto andOp = [](int x, int y) -> bool {
+            return static_cast<bool>(x && y);
+        };
+        
+        auto orOp = [](int x, int y) -> bool {
+            return static_cast<bool>(x || y);
+        };
+        #endif
+
+
         if (AndOpChar == curOp) {
-            return std::make_tuple((valLeft && valRight), change);
+            #ifdef USE_LAMDA
+                return std::make_tuple(andOp(valLeft, valRight), change);
+            #else
+                return std::make_tuple((valLeft && valRight), change);
+            #endif
         } else {
-            return std::make_tuple((valLeft || valRight), change);
+            #ifdef USE_LAMDA
+                return std::make_tuple(orOp(valLeft, valRight), change);
+            #else
+                return std::make_tuple((valLeft || valRight), change);
+            #endif
         }
     }
 
