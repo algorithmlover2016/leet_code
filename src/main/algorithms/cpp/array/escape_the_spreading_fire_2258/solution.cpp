@@ -4,7 +4,7 @@
 // #define DEBUG
 // #define DEBUG_DIE
 // #define MEM_NO_LIMIT
-class Solution {
+class SolutionBS {
 public:
     int maximumMinutes(std::vector<std::vector<int>> grid) {
         // plagiarizing from https://leetcode.com/problems/escape-the-spreading-fire/discuss/1995289/Python-BFS-Solution
@@ -138,6 +138,98 @@ private:
     static int const FIRE = 1;
     static int const GRASS = 0;
     static int const REDEFINE_WALL = -1;
+
+    static int const DIRECTION_SIZE = 4;
+    static std::array<int, DIRECTION_SIZE + 1> directions;
+};
+std::array<int, SolutionBS::DIRECTION_SIZE + 1> SolutionBS::directions = {{1, 0, -1, 0, 1}};
+
+
+// #define DEBUG
+class Solution {
+public:
+    int maximumMinutes(std::vector<std::vector<int>> const & grid) {
+        // plagiarizing from https://leetcode.com/problems/escape-the-spreading-fire/discuss/2016835/No-BS
+        if (grid.empty() || grid[0].empty()) {
+            return MAX_ANS;
+        }
+        int rowSize = grid.size(), colSize = grid[0].size();
+        std::queue<std::pair<int, int>> fires, persons({{0, 0}});
+        for (int row = 0; row < grid.size(); row++) {
+            for (int col = 0; col < grid[row].size(); col++) {
+                if (FIRE == grid[row][col]) {
+                    fires.emplace(std::make_pair(row, col)); // find all the fire points.
+                }
+            }
+        }
+        // std::function<std::array<int, RETURN_VAL_LEN>(std::queue<std::pair<int, int>> & bfsQue)> bfsComplete =
+        // [&](std::queue<std::pair<int, int>> & bfsQue) -> std::array<int, RETURN_VAL_LEN> {
+        //     return std::array<int, RETURN_VAL_LEN>{0, 0, 0};
+        // };
+        auto bfs = [&](std::queue<std::pair<int, int>> & bfsQue) {
+            std::vector<std::vector<int>> remarkSteps(rowSize, std::vector<int>(colSize, INIT_STEP));
+            while (!bfsQue.empty()) {
+                auto [curRow, curCol] = bfsQue.front(); bfsQue.pop();
+                // we can not add one here, because we initialize the initial value as zero which is alread add one at first time.
+                // if we initialize the INIT_STEP as -1, then we need add one here.
+                for (int dIdx = 0; dIdx < DIRECTION_SIZE; dIdx++) {
+                    int nextRow = curRow + directions[dIdx];
+                    int nextCol = curCol + directions[dIdx + 1];
+                    if (std::min(nextRow, nextCol) >= 0 && nextRow < rowSize && nextCol < colSize &&
+                        grid[nextRow][nextCol] == GRASS && INIT_STEP == remarkSteps[nextRow][nextCol] /* the pos has never been visited, bfs, shortest path*/
+                    ) {
+                        remarkSteps[nextRow][nextCol] = remarkSteps[curRow][curCol] + 1;
+                        bfsQue.emplace(std::make_pair(nextRow, nextCol));
+                    }
+                }
+            }
+            std::vector<int> ans;
+            ans.emplace_back(remarkSteps[rowSize - 1][colSize - 1]);
+            if (rowSize > 1) {
+                ans.emplace_back(remarkSteps[rowSize - 1][colSize - 2]);
+            } else {
+                return ans;
+            }
+            if (colSize > 1) {
+                ans.emplace_back(remarkSteps[rowSize - 2][colSize - 1]);
+            }
+            return ans;
+        };
+        auto fireAns = bfs(fires), pAns = bfs(persons);
+        #ifdef DEBUG
+        for (int posNum: fireAns) {
+            std::cout << posNum << ", ";
+        }
+        std::cout << "\n pAns:\n";
+        for (int posNum : pAns) {
+            std::cout << posNum << ", ";
+        }
+        std::cout << "\n";
+        #endif
+        if (RETURN_VAL_LEN > fireAns.size() || RETURN_VAL_LEN > pAns.size()) {
+            // it means there is a 1*1 grid
+            return grid.back().back() == GRASS ? MAX_ANS : NEVER_REACH;
+        }
+        if (fireAns[0] == INIT_STEP /*fire can not reach the safehouse*/ && pAns[0] > INIT_STEP /* person can reach to the firHouse*/) {
+            return MAX_ANS;
+        }
+        if (int diff = fireAns[0] - pAns[0]; pAns[0] > 0 /*person can reach safehouse*/ && diff >= 0) {
+            return diff - (fireAns[LEFT_IDX] - pAns[LEFT_IDX] <= diff && fireAns[UPPER_IDX] - pAns[UPPER_IDX] <= diff);
+        }
+        return NEVER_REACH;
+
+
+
+    }
+private:
+    int const INIT_STEP = 0;
+    static int const NEVER_REACH = -1;
+    static int const MAX_ANS = 1e9;
+    static int const FIRE = 1;
+    static int const GRASS = 0;
+    static int const RETURN_VAL_LEN = 3;
+    static int const LEFT_IDX = 1;
+    static int const UPPER_IDX = 2;
 
     static int const DIRECTION_SIZE = 4;
     static std::array<int, DIRECTION_SIZE + 1> directions;
