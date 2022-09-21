@@ -68,3 +68,48 @@ private:
     int start;
     std::string content;
 };
+
+class TextEditor {
+public:
+    TextEditor() {
+        // plagiarizing from https://leetcode.com/problems/design-a-text-editor/discuss/2112623/Two-Strings
+        // and https://leetcode.com/problems/design-a-text-editor/discuss/2111861/Using-Two-Stacks-or-C%2B%2B
+    }
+
+    void addText(std::string const & text) {
+        left.append(text);
+        // left.insert(left.end(), std::begin(text), std::end(text));
+    }
+
+    int deleteText(int k) {
+        k = std::min(k, (int)left.size());
+        // int ans = k;
+        // while (k--) {
+        //     left.pop_back();
+        // }
+        // return ans;
+        left.resize(left.size() - k);
+        return k;
+    }
+
+    std::string cursorLeft(int k) {
+        k = std::min(k, (int)left.size());
+        while (k--) {
+            char c = left.back(); left.pop_back();
+            right.push_back(c);
+        }
+        return left.substr(left.size() - std::min(MAX_LEN, (int)left.size()));
+    }
+
+    std::string cursorRight(int k) {
+        k = std::min(k, (int)right.size());
+        while (k--) {
+            left.push_back(right.back());
+            right.pop_back();
+        }
+        return left.substr(left.size() - std::min(MAX_LEN, (int)left.size()));
+    }
+private:
+    std::string left, right;
+    constexpr int static MAX_LEN = 10;        
+};
