@@ -72,9 +72,82 @@ private:
 // http://jakeboxer.com/blog/2009/12/13/the-knuth-morris-pratt-algorithm-in-my-own-words/
 // and https://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html
 // and https://www.zhihu.com/question/21923021
-
-class Solution {
+#define DEBUG
+class SolutionWrong {
 public:
     bool matchReplacement(std::string const & s, std::string const & sub, std::vector<std::vector<char>> const & mappings) {
+        std::unordered_map<char, std::unordered_set<char>> mapps;
+        for (auto & mapping : mappings) {
+            if (mapping.size() < MAPPING_LEN) {
+                continue;
+            }
+            mapps[mapping[MAPPING_FIRST_IDX]].insert(mapping[MAPPING_SECOND_IDX]);
+        }
+        #ifdef DEBUG
+        for (auto & [key, val] : mapps) {
+            std::cout << key << ": ";
+            for (auto c : val) {
+                std::cout << c << ",";
+            }
+            std::cout << "\n";
+        }
+        #endif
+
+        std::vector<int> lps = computeLPS(sub, mapps);
+        for (int idx = 0, subIdx = 0; idx < s.size();) {
+            if (s[idx] == sub[subIdx] || (mapps.find(sub[subIdx]) != mapps.end() && mapps.at(sub[subIdx]).count(s[idx]))) {
+                #ifdef DEBUG
+                std::cout << idx << ", " << subIdx << " match\n";
+                #endif
+                idx++;
+                subIdx++;
+            } else {
+                if (subIdx) {
+                    subIdx = lps[subIdx - 1];
+                    #ifdef DEBUG
+                    std::cout << "need adjust subIdx: " << subIdx << "\n";
+                    #endif
+                } else {
+                    #ifdef DEBUG
+                    std::cout << "need new start\n";
+                    #endif
+                    idx++;
+                }
+            }
+            if (subIdx == sub.size()) {
+                return true;
+            }
+        }
+        return false;
+
     }
+private:
+    std::vector<int> computeLPS(std::string const & str, std::unordered_map<char, std::unordered_set<char>> const & mapps) {
+        std::vector<int> lps(str.size());
+        for (int idx = 1, subIdx = 0; idx < str.size(); idx++) {
+            while (subIdx &&
+                    (str[idx] != str[subIdx] &&
+                    (mapps.find(str[subIdx]) == mapps.end() || mapps.at(str[subIdx]).find(str[idx]) == mapps.at(str[subIdx]).end()) &&
+                    (mapps.find(str[idx]) == mapps.end() || mapps.at(str[idx]).find(str[subIdx]) == mapps.at(str[idx]).end()))) {
+                        // the judgement is wrong.
+                subIdx = std::max(0, lps[subIdx] - 1);
+            }
+            subIdx += str[idx] == str[subIdx] ||
+                                    (mapps.find(str[subIdx]) != mapps.end() && mapps.at(str[subIdx]).count(str[idx]) > 0) ||
+                                    (mapps.find(str[idx]) != mapps.end() && mapps.at(str[idx]).count(str[subIdx]) > 0);
+            lps[idx] = subIdx;
+        }
+        #ifdef DEBUG
+        for (int idx = 0; idx < lps.size(); idx++) {
+            std::cout << "(" << idx << ", " << lps[idx] << "), ";
+        }
+        std::cout << "\n";
+        #endif
+        return lps;
+    }
+
+private:
+    constexpr int static MAPPING_LEN = 2;
+    constexpr int static MAPPING_FIRST_IDX = 0;
+    constexpr int static MAPPING_SECOND_IDX = 1;
 };
