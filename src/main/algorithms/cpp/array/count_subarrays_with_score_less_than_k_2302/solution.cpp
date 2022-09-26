@@ -23,3 +23,23 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    long long countSubarrays(std::vector<int> const & nums, long long k) {
+
+        // plagiarizing from https://leetcode.com/problems/count-subarrays-with-score-less-than-k/discuss/2138778/Sliding-Window
+        /*
+        we find all the subarray ending with the current index
+        */
+        long long ans = 0, sum = 0;
+        for (int idx = 0, leftIdx = 0; idx < nums.size(); idx++) {
+            sum += nums[idx];
+            while (sum * (idx - leftIdx + 1) >= k) {
+                sum -= nums[leftIdx++];
+            }
+            ans += idx - leftIdx + 1;
+        }
+        return ans;
+    }
+};
