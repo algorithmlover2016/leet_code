@@ -35,7 +35,7 @@ public:
         long long ans = 0, sum = 0;
         for (int idx = 0, leftIdx = 0; idx < nums.size(); idx++) {
             sum += nums[idx];
-            while (sum * (idx - leftIdx + 1) >= k) {
+            while (sum * (idx - leftIdx + 1) >= k && leftIdx <= idx) {
                 sum -= nums[leftIdx++];
             }
             ans += idx - leftIdx + 1;
