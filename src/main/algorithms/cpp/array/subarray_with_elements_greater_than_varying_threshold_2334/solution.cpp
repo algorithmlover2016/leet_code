@@ -51,7 +51,7 @@ public:
         std::vector<int> nonDescreasings;
         nums.emplace_back(0); // add a minimum element into nums to compute all the internal
         for (int idx = 0; idx < nums.size(); idx++) {
-            while (!nonDescreasings.empty() && nums[idx] < nums[nonDescreasings.back()]) {
+            while (!nonDescreasings.empty() && nums[idx] <= nums[nonDescreasings.back()]) { // <= or < is the same
                 // we find a element at idx which is less than the previous element marked in nonDescreasings
                 int val = nums[nonDescreasings.back()]; nonDescreasings.pop_back();
                 int leftIdx = nonDescreasings.empty() ? -1 : nonDescreasings.back();
