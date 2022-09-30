@@ -57,7 +57,7 @@ public:
         #endif
         int ans =0;
         for (int lastVal = 1; lastVal <= maxValue; lastVal++) {
-            for (int bars = 0; bars < std::min(MAX_VAL_BITS, n) && cnts[lastVal][bars]; bars++) {
+            for (int bars = 0; bars < std::min(MAX_VAL_BITS /*must first defined and then use here*/, n) && cnts[lastVal][bars]; bars++) {
                 ans = (1LL * cnts[lastVal][bars] * combs[n - 1][bars] + ans) % MOD;
             }
         }
