@@ -118,10 +118,28 @@ private:
     std::vector<std::vector<int>> combs;
     std::vector<std::vector<int>> cnts;
 };
+constexpr int Solution::MAX_VAL_BITS;
 
 int main() {
-    Solution obj;
-    std::cout << obj.idealArrays(2, 5) << "\n";
-    std::cout << obj.idealArrays(5, 3) << std::endl;
+    std::cout << "run in main" << std::endl;
+    { // right use
+        Solution obj;
+        std::cout << obj.idealArrays(2, 5) << "\n";
+        std::cout << "run second" << std::endl;
+        // Solution obj;
+        std::cout << obj.idealArrays(5, 3) << std::endl;
+    }
+    /*
+    // wrong call because of static initialization lead to segmentation fault
+    {
+        Solution obj;
+        std::cout << obj.idealArrays(2, 5) << "\n";
+    }
+        std::cout << "run second" << std::endl;
+    {
+        // Solution obj;
+        std::cout << obj.idealArrays(5, 3) << std::endl;
+    }
+    */
     return 0;
 }
