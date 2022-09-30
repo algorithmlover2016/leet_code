@@ -118,3 +118,10 @@ private:
     std::vector<std::vector<int>> combs;
     std::vector<std::vector<int>> cnts;
 };
+
+int main() {
+    Solution obj;
+    std::cout << obj.idealArrays(2, 5) << "\n";
+    std::cout << obj.idealArrays(5, 3) << std::endl;
+    return 0;
+}
