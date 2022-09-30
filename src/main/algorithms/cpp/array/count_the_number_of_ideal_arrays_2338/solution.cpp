@@ -5,6 +5,7 @@
 class Solution {
 public:
     int idealArrays(int n, int maxValue) {
+        // plagiarizing from https://leetcode.com/problems/count-the-number-of-ideal-arrays/solutions/2265366/sieve-of-eratosthenes-o-maxvalue/?orderBy=most_votes
         if (n >= MAX_ROWS || maxValue >= MAX_VAL) {
             return -1;
         }
@@ -57,7 +58,7 @@ public:
         #endif
         int ans =0;
         for (int lastVal = 1; lastVal <= maxValue; lastVal++) {
-            for (int bars = 0; bars < std::min(MAX_VAL_BITS /*must first defined and then use here*/, n) && cnts[lastVal][bars]; bars++) {
+            for (int bars = 0; bars < std::min(MAX_VAL_BITS /*must first defined and then use here, for more, refer to https://blog.csdn.net/qq_33215865/article/details/95192347*/, n) && cnts[lastVal][bars]; bars++) {
                 ans = (1LL * cnts[lastVal][bars] * combs[n - 1][bars] + ans) % MOD;
             }
         }
