@@ -75,3 +75,37 @@ public:
 private:
     char constexpr static OFFSET = '0';
 };
+
+
+class SolutionPERM {
+public:
+    int countSpecialNumbers(int n) {
+        // plagiarizing from https://leetcode.com/problems/count-special-integers/solutions/2425271/java-python-math/
+        std::string nStr = std::to_string(n + 1);
+        std::set<int> visited;
+        int ans = 0;
+        for (int len = 1; len < nStr.size(); len++) {
+            ans += 9 * A(9, len - 1);
+        }
+        for (int idx = 0; idx < nStr.size(); idx++) {
+            for (int j = (idx == 0 ? 1 : 0); j < nStr[idx] - OFFSET; j++) {
+                if (visited.find(j) == visited.end()) {
+                    ans += A(9 - idx, nStr.size() - idx - 1); // from idx + 1 (included) to nStr.size() (excluded)
+                }
+            }
+            if (visited.find(nStr[idx] - OFFSET) != visited.end()) {
+                break;
+            }
+            visited.insert(nStr[idx] - OFFSET);
+        }
+        return ans;
+    }
+private:
+    int A(int m, int n) {
+        // m >= n
+        return 0 == n ? 1 : (A(m, n - 1) * (m - n + 1));
+    }
+private:
+    char constexpr static OFFSET = '0';
+};
+
