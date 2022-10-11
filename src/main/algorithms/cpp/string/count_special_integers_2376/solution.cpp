@@ -1,11 +1,15 @@
 #include "../../head.h"
 
-
 // #define DEBUG
+// #define ADD_ONE_ON_NUM // refer to https://leetcode.com/problems/count-special-integers/solutions/2425271/java-python-math/
 class Solution {
 public:
     int countSpecialNumbers(int n) {
+        #ifdef ADD_ONE_ON_NUM
+        std::string nStr = std::to_string(n + 1);
+        #else
         std::string nStr = std::to_string(n);
+        #endif
         int ans = 0;
         int nStrSize = nStr.size();
         if (nStrSize > 1) {
@@ -31,7 +35,9 @@ public:
             std::cout << "with the first letter, ans: " << ans << "\n";
             #endif
             if (1 == nStrSize) {
+                #ifndef ADD_ONE_ON_NUM
                 ans += 1; // nStr[0] - OFFSET
+                #endif
                 return ans;
             }
         }
@@ -58,7 +64,9 @@ public:
                 if (*it == cur) {
                     break;
                 }
+                #ifndef ADD_ONE_ON_NUM
                 ans += (idx == nStrSize - 1 ? 1 : 0);
+                #endif
                 visited.insert(cur);
             }
         }
