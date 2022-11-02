@@ -30,5 +30,6 @@
 #include <random>
 #include <regex>
 #include <utility>
+#include <numeric>
 #endif
 
