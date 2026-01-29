@@ -31,5 +31,5 @@
 #include <regex>
 #include <utility>
 #include <numeric>
+using namespace std;
 #endif
-
