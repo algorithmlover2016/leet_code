@@ -93,10 +93,10 @@ private:
         int n;
     public:
         FenwickTree(int size) : n(size) {
-            bit.assign(n + 1, 0);
+            bit.assign(n, 0);
         }
         void add(int idx, int val) {
-            for (; idx <= n; idx += (idx & -idx)) {
+            for (; idx < n; idx += (idx & -idx)) {
                 bit[idx] += val;
             }
         }
@@ -118,18 +118,21 @@ public:
         FenwickTree fenwickTree(n);
 
         for (int i = 1; i < n; ++i) {
+            sInts[i] = (s[i] - 'A');
             if (s[i - 1] == s[i]) {
                 fenwickTree.add(i, 1);
             }
-            sInts[i] = (s[i] - 'A');
         }
 
         vector<int> ans;
         ans.reserve(queries.size());
 
         for (const auto& q : queries) {
+            if (q.size() < 1) {
+                continue;
+            }
             int type = q[0];
-            if (type == FLIP_FLAG) {
+            if (type == FLIP_FLAG && (q.size() > 1)) {
                 int idx = q[1];
 
                 sInts[idx] = 1 - sInts[idx];
@@ -144,10 +147,10 @@ public:
             } else if (type == QUERY_FLAG) {
                 int l = q[1];
                 int r = q[2];
-                if (l >= r) {
+                if (l > r) {
                     ans.push_back(0);
                 } else {
-                    ans.push_back(fenwickTree.query(r) - fenwickTree.query(l - 1));
+                    ans.push_back(fenwickTree.query(r) - fenwickTree.query(l ));
                 }
             }
         }
