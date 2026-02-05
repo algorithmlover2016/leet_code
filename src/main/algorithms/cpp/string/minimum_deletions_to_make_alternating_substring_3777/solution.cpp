@@ -2,7 +2,7 @@
 
 // Time Complexity: O(Q * log N)
 // Space Complexity: O(N)
-class Solution {
+class SolutionAI {
 private:
     vector<int> bit;
     int n;
@@ -81,4 +81,77 @@ public:
         }
         return ans;
     }
+};
+
+class Solution {
+private:
+    const int FLIP_FLAG = 1;
+    const int QUERY_FLAG = 2;
+    class FenwickTree {
+    private:
+        vector<int> bit;
+        int n;
+    public:
+        FenwickTree(int size) : n(size) {
+            bit.assign(n + 1, 0);
+        }
+        void add(int idx, int val) {
+            for (; idx <= n; idx += (idx & -idx)) {
+                bit[idx] += val;
+            }
+        }
+        int query(int idx) {
+            int sum = 0;
+            for (; idx > 0; idx -= (idx & -idx)) {
+                sum += bit[idx];
+            }
+            return sum;
+        }
+    };
+public:
+    vector<int> minDeletions(string s, vector<vector<int>>& queries) {
+        int n = s.length();
+        if (n == 0) {
+            return {};
+        }
+        std::vector<int> sInts(n, (s[0] - 'A'));
+        FenwickTree fenwickTree(n);
+
+        for (int i = 1; i < n; ++i) {
+            if (s[i - 1] == s[i]) {
+                fenwickTree.add(i, 1);
+            }
+            sInts[i] = (s[i] - 'A');
+        }
+
+        vector<int> ans;
+        ans.reserve(queries.size());
+
+        for (const auto& q : queries) {
+            int type = q[0];
+            if (type == FLIP_FLAG) {
+                int idx = q[1];
+
+                sInts[idx] = 1 - sInts[idx];
+
+                if (idx > 0) {
+                    fenwickTree.add(idx, (sInts[idx] == sInts[idx - 1]) ? 1 : -1);
+                }
+                if (idx < n - 1) {
+                    fenwickTree.add(idx + 1, (sInts[idx] == sInts[idx + 1]) ? 1 : -1);
+                }
+
+            } else if (type == QUERY_FLAG) {
+                int l = q[1];
+                int r = q[2];
+                if (l >= r) {
+                    ans.push_back(0);
+                } else {
+                    ans.push_back(fenwickTree.query(r) - fenwickTree.query(l - 1));
+                }
+            }
+        }
+        return ans;
+    }
+
 };
