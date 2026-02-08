@@ -40,7 +40,7 @@ private:
     }
 };
 
-class Solution {
+class Solution2dp {
 public:
     vector<int> maxSubgraphScore(int n, vector<vector<int>>& edges, vector<int>& good) {
         std::vector<std::vector<int>> graph(n);
@@ -99,3 +99,46 @@ private:
     }
 };
 // https://leetcode.com/problems/maximum-subgraph-score-in-a-tree/solutions/7396921/python-3-c-optimized-iterative-bottom-up-eat7/
+
+
+
+class Solution {
+private:
+    static const int N = 1e5;
+    int pa[N], deg[N], q[N];
+public:
+    vector<int> maxSubgraphScore(int n, vector<vector<int>>& es, vector<int>& dp) {
+        memset(pa, 0, sizeof(int) * n), memset(deg, 0, sizeof(int) * n);
+
+        // Prevent root from entering queue too early.
+        // Can be any non-negative int != 1 (0, 2, 3...). If 1, node 0 becomes a leaf pointing to itself.
+        // setting it to 1 would cause node 0 to be incorrectly treated as a leaf and point to itself as its parent, leading to calculation errors.
+        // if setting to 0, then node 0 would be treated as a leaf and removed first, which is also correct but less intuitive.
+        // if setting to 2, 3, 4, ..., node 0 won't be treated as a leaf initially, which is treated as root forever.
+        deg[0] = 2;
+        for (auto& e : es) {
+            int a = e[0], b = e[1];
+            deg[a]++, deg[b]++;
+            pa[a] ^= b, pa[b] ^= a;
+        }
+        for (int i = 0; i < n; ++i) dp[i] = (dp[i] << 1) - 1; // Map 0 -> -1, 1 -> 1
+
+        int qi = 0;
+        for (int s = 0; s < n; ++s) {
+            // Use XOR property to dynamically remove child and point to grand-parent in the loop update
+            for (int i = s, p; deg[i] == 1; pa[p] ^= i, --deg[p], i = p) {
+                q[qi++] = i;
+                deg[i] = 0;
+                p = pa[i];
+                if (dp[i] > 0) dp[p] += dp[i];
+            }
+        }
+
+        while (qi--) {
+            int i = q[qi];
+            // Add parent contribution (excluding self impact)
+            dp[i] += max(0, dp[pa[i]] - max(0, dp[i]));
+        }
+        return dp;
+    }
+};
