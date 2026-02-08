@@ -82,7 +82,7 @@ private:
             int isWave = 0;
             // We need a valid previous-previous (pp) and previous (p) to check for a wave at p.
             // If leadZero was true, pp and p are 10, so this block won't execute, which is correct.
-            if (!leadZero && pp != 10 && p != 10) {
+            if (pp != 10) { // == (!leadZero && pp != 10 && p != 10)
                 if ((p > pp && p > d) || (p < pp && p < d)) {
                     isWave = 1;
                 }
